@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunlun.api.mapper.TicketMapper">
+    <!--查询优惠券快照信息-->
+    <select id="findTicketSnapShotInfo" resultType="com.kunlun.entity.TicketSnapshot">
+        SELECT * from t_ticket_snapshot WHERE id=#{ticketSnapShotId}
+    </select>
+
+    <!--查询用户优惠券信息-->
+    <select id="findTicketUserInfo" resultType="com.kunlun.entity.TicketUser">
+        SELECT * from t_ticket_user WHERE id = #{tickId}
+    </select>
+
+    <!--更改用户优惠券状态-->
+    <update id="modifyUserTicketStatus">
+        UPDATE t_ticket_user SET status = #{status} WHERE id= #{ticketId}
+    </update>
+</mapper>

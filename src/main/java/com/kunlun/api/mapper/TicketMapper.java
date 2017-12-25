@@ -1,0 +1,35 @@
+package com.kunlun.api.mapper;
+
+import com.kunlun.entity.TicketSnapshot;
+import com.kunlun.entity.TicketUser;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+/**
+ * @author by hws
+ * @created on 2017/12/25.
+ */
+@Mapper
+public interface TicketMapper {
+
+    /**
+     * 根据 快照id查询优惠券详情
+     * @param ticketSnapShotId
+     * @return
+     */
+    TicketSnapshot findTicketSnapShotInfo(@Param("ticketSnapShotId") Long ticketSnapShotId);
+
+    /**
+     * 根据tickId查找用户优惠券详情信息
+     * @param tickId
+     * @return
+     */
+    TicketUser  findTicketUserInfo(@Param("tickId") Long tickId);
+
+    /**
+     * 修改用户优惠券状态
+     * @param ticketId
+     * @return
+     */
+    int modifyUserTicketStatus(@Param("ticketId") Long ticketId,@Param("status") String status);
+}
