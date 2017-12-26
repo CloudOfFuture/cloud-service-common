@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunlun.api.mapper.FileMapper">
+
+    <!--根据url查询图片-->
+    <select id="findByUrl" resultType="com.kunlun.entity.MallImg">
+        SELECT
+         id,
+        target_id,
+        url,
+        type,
+        create_date
+        FROM  t_mall_img WHERE url = #{url}
+    </select>
+
+    <!--删除图片-->
+    <delete id="deleteByUrl">
+        DELETE FROM  t_mall_img WHERE url = #{url}
+    </delete>
+
+    <!--根据id删除图片-->
+    <delete id="deleteById">
+        DELETE FROM t_mall_img WHERE id=#{id}
+    </delete>
+
+    <!--插入图片地址-->
+    <insert id="add" parameterType="com.kunlun.entity.MallImg">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO t_mall_img(
+        target_id,
+        url,
+        type,
+        create_date)
+        VALUES(
+        #{targetId},
+        #{url},
+        #{type},
+        NOW())
+    </insert>
+
+    <!--根据type查找图片 商品图片0,品牌图片1,文章图片2,商品评价图片3,广告图片4,
+    活动图片5,富文本图片路径 6 ,证件照图片路径  7-->
+    <select id="findByCondition" resultType="com.kunlun.entity.MallImg">
+        SELECT id,
+        target_id,
+        url,
+        type,
+        create_date
+        FROM t_mall_img
+        WHERE 1=1
+        <if test="type!=null and type!=''">type=#{type}</if>
+        <if test="targetId!=null">target_id=#{targetId}</if>
+    </select>
+
+    <!--根据id修改图片-->
+    <update id="modify" parameterType="com.kunlun.entity.MallImg">
+        UPDATE t_mall_img
+        SET update_date=now()
+        <if test="url!=null ">,url=#{url}</if>
+        <if test="type!=null ">,type=#{type}</if>
+        <if test="targetId!=null ">,target_id=#{targetId}</if>
+        WHERE id=#{id}
+    </update>
+</mapper>
