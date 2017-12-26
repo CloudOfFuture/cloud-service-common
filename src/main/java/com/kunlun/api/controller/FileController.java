@@ -31,7 +31,8 @@ public class FileController {
      * @throws IOException e
      */
     @PostMapping(value = "/uploadImage")
-    public DataRet uploadImage(@RequestParam MultipartFile file, String jsonContent) throws IOException {
+    public DataRet uploadImage(@RequestParam(value = "file") MultipartFile file,
+                               @RequestParam(value = "jsonContent") String jsonContent) throws IOException {
         return fileService.uploadImage(file, jsonContent);
     }
 
