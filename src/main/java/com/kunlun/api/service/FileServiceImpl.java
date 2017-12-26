@@ -119,7 +119,7 @@ public class FileServiceImpl implements FileService {
         if (StringUtils.isEmpty(url)) {
             return new DataRet<>("param_error", "参数有误");
         }
-        MallImg mallImg = fileMapper.findById(url);
+        MallImg mallImg = fileMapper.findByUrl(url);
         if (mallImg == null) {
             return new DataRet("not_found", "查无结果");
         }

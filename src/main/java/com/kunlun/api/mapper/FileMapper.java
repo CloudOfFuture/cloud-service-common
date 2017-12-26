@@ -22,7 +22,7 @@ public interface FileMapper {
      * @param url String
      * @return int
      */
-    MallImg findById(@Param("url") String url);
+    MallImg findByUrl(@Param("url") String url);
 
     /**
      * 根据商品id删除图片
