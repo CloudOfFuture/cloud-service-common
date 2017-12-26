@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
-@EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
 @SpringBootApplication
 public class CloudServiceCommonApplication {
 
