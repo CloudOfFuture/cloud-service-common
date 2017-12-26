@@ -14,7 +14,7 @@ public interface TicketService {
      * @param ticketId
      * @return
      */
-    String checkTicket(String useTicket, Long ticketId);
+    DataRet<String> checkTicket(String useTicket, Long ticketId);
 
     /**
      * 修改用户优惠券状态
@@ -22,5 +22,5 @@ public interface TicketService {
      * @param status
      * @return
      */
-    DataRet modifyUserTicketStatus(Long ticketId,String status);
+    DataRet<String> modifyUserTicketStatus(Long ticketId,String status);
 }
