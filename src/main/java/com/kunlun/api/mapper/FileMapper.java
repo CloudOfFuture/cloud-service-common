@@ -2,6 +2,7 @@ package com.kunlun.api.mapper;
 
 import com.github.pagehelper.Page;
 import com.kunlun.entity.MallImg;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @date 17-12-25下午5:28
  * @desc
  */
+@Mapper
 public interface FileMapper {
 
     /**
