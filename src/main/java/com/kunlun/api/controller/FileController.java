@@ -53,7 +53,7 @@ public class FileController {
      * @param url 图片url
      * @return DataRet
      */
-    @GetMapping(value = "/deleteByUrl")
+    @PostMapping(value = "/deleteByUrl")
     public DataRet deleteByUrl(@RequestParam(value = "url") String url) {
         return fileService.deleteByUrl(url);
     }
@@ -65,7 +65,7 @@ public class FileController {
      * @param id 图片id
      * @return DataRet
      */
-    @GetMapping(value = "/deleteById")
+    @PostMapping(value = "/deleteById")
     public DataRet deleteById(@RequestParam(value = "id") Long id) {
         return fileService.deleteById(id);
     }
