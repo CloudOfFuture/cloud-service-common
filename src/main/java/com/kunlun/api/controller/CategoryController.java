@@ -30,6 +30,7 @@ public class CategoryController {
     public DataRet<String> bind(@RequestParam(value = "categoryId") Long categoryId,
                                 @RequestParam(value = "goodId") Long goodId) {
         return categoryService.bind(categoryId, goodId);
+
     }
 
 
