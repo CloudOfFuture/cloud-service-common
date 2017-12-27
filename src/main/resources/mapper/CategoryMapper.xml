@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunlun.api.mapper.CategoryMapper">
+
+    <!--添加类目活动关系-->
+    <insert id="bindCategoryGood">
+        INSERT INTO t_category_good
+        (category_id,good_id, create_date)
+        VALUES
+        (#{categoryId},#{goodId},now())
+    </insert>
+
+
+    <!--清空跟类目id的绑定的所有商品关系-->
+    <delete id="unbindWithCategoryId">
+        DELETE FROM t_category_good
+        WHERE category_id=#{categoryId}
+    </delete>
+
+    <!--清空跟商品id关联的关系-->
+    <delete id="unbindWithGoodId">
+        DELETE FROM t_category_good
+        WHERE good_id=#{goodId}
+    </delete>
+
+
+</mapper>
