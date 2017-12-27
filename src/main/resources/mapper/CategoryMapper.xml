@@ -12,14 +12,6 @@
         (#{categoryId},#{goodId},now())
     </insert>
 
-    <!--清空商品跟类目的绑定关系-->
-    <delete id="unbindCategoryGood">
-        DELETE FROM t_category_good
-        WHERE good_id IN
-        <foreach collection="goodIdList" index="index" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </delete>
 
     <!--清空跟类目id的绑定的所有商品关系-->
     <delete id="unbindWithCategoryId">
@@ -33,25 +25,5 @@
         WHERE good_id=#{goodId}
     </delete>
 
-    <!--根据类目id查询类目参加的活动-->
-    <select id="findByCategoryId" resultType="com.kunlun.entity.CategoryGood">
-        SELECT  id,
-        category_id,
-        create_date,
-        good_id
-        FROM  t_category_good
-        WHERE  category_id=#{categoryId}
-    </select>
-
-    <!--根据类目id查询类目参加的活动-->
-    <select id="findCountByCategoryIdList" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM t_category_good tcate
-        LEFT JOIN t_good good ON tcate.good_id=good.id
-        WHERE good.on_sale='ON_SALE' AND tcate.category_id IN
-        <foreach collection="idList" item="item" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </select>
 
 </mapper>
