@@ -28,8 +28,9 @@ public class CategoryController {
      */
     @PostMapping("/bindCategoryGood")
     public DataRet<String> bind(@RequestParam(value = "categoryId") Long categoryId,
-                                @RequestParam(value = "goodId") Long goodId){
-        return categoryService.bind(categoryId,goodId);
+                                @RequestParam(value = "goodId") Long goodId) {
+        return categoryService.bind(categoryId, goodId);
+
     }
 
 
@@ -40,7 +41,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/unbindCategoryGood")
-    public DataRet<String> unbinding(@RequestParam(value = "goodId") Long goodId){
+    public DataRet<String> unbinding(@RequestParam(value = "goodId") Long goodId) {
         return categoryService.unbinding(goodId);
     }
 
@@ -52,7 +53,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/add/category")
-    public DataRet<String> addCategory(@RequestBody Category category){
+    public DataRet<String> addCategory(@RequestBody Category category) {
         return categoryService.add(category);
     }
 
