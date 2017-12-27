@@ -1,5 +1,6 @@
 package com.kunlun.api.service;
 
+import com.kunlun.entity.MallImg;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,4 +65,11 @@ public interface FileService {
      * @return List
      */
     PageResult findByCondition(Integer pageNo, Integer pageSize, Long targetId, String type);
+
+    /**
+     * 新增图片对象
+     * @param mallImg
+     * @return
+     */
+    DataRet add(MallImg mallImg);
 }

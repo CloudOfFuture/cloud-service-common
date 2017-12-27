@@ -72,4 +72,11 @@ public interface FileMapper {
                                   @Param("targetId") Long targetId);
 
 
+    /**
+     * 查询证件照
+     *
+     * @param targetId
+     * @return
+     */
+    List<MallImg> findIdPhotoByUserId(@Param("targetId") Long targetId);
 }

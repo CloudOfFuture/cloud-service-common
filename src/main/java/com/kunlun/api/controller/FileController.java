@@ -1,6 +1,7 @@
 package com.kunlun.api.controller;
 
 import com.kunlun.api.service.FileService;
+import com.kunlun.entity.MallImg;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,18 @@ public class FileController {
                                @RequestParam(value = "jsonContent") String jsonContent) throws IOException {
         return fileService.uploadImage(file, jsonContent);
     }
+
+    /**
+     * 根据url查询图片
+     *
+     * @param mallImg 图片对象
+     * @return DataRet
+     */
+    @GetMapping(value = "/add")
+    public DataRet add(@RequestBody MallImg mallImg) {
+        return fileService.add(mallImg);
+    }
+
 
     /**
      * 根据url查询图片
