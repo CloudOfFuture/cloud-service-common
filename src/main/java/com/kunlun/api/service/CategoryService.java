@@ -1,5 +1,6 @@
 package com.kunlun.api.service;
 
+import com.kunlun.entity.Category;
 import com.kunlun.result.DataRet;
 
 /**
@@ -21,9 +22,16 @@ public interface CategoryService {
     /**
      * 商品解绑类目
      *
-     * @param categoryId
      * @param goodId
      * @return
      */
     DataRet<String> unbinding(Long goodId);
+
+    /**
+     * 新增类目
+     *
+     * @param category
+     * @return
+     */
+    DataRet<String> add(Category category);
 }

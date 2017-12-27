@@ -1,5 +1,6 @@
 package com.kunlun.api.mapper;
 
+import com.kunlun.entity.Category;
 import com.kunlun.entity.CategoryGood;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -58,6 +59,15 @@ public interface CategoryMapper {
      */
     Integer unbindWithGoodId(@Param("goodId") Long goodId);
 
+
+    /**
+     * 校验类目名称是否存在
+     *
+     * @param categoryName
+     * @return
+     */
+    Integer validCategoryName(@Param("categoryName") String categoryName);
+
     /**
      * 查询集合中id是否已经绑定
      *
@@ -65,4 +75,13 @@ public interface CategoryMapper {
      * @return
      */
     Integer findCountByCategoryIdList(@Param("idList") List<Long> idList);
+
+
+    /**
+     * 类目新增
+     *
+     * @param category
+     * @return
+     */
+    Integer add(Category category);
 }
