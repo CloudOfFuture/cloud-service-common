@@ -59,5 +59,5 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
                 .allowedHeaders("*");
         super.addCorsMappings(registry);
     }
-    
+
 }
