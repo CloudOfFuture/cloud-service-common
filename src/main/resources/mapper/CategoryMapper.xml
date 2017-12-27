@@ -25,5 +25,62 @@
         WHERE good_id=#{goodId}
     </delete>
 
+    <!--类目新增-->
+    <insert id="add" parameterType="com.kunlun.entity.Category">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO t_cagetory(
+        category_name,
+        create_date,
+        status,
+        parent_id,
+        sort,
+        icon)
+        VALUES (
+        #{categoryName},
+        now(),
+        #{status},
+        #{parentId},
+        #{sort},
+        #{icon})
+    </insert>
 
+    <!--校验名称-->
+    <select id="validCategoryName" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_category WHERE category_name=#{categoryName} AND status='NORMAL'
+    </select>
+
+    <!--根据id校验名称-->
+    <select id="validByNameAndId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_category WHERE category_name=#{categoryName} AND id!={id} AND status='NORMAL'
+    </select>
+
+    <!--修改类目-->
+    <update id="modify" parameterType="com.kunlun.entity.Category">
+        UPDATE t_category SET
+        <if test="categoryName!=null">category_name=#{categoryName},</if>
+        <if test="status!=null">status=#{status},</if>
+        <if test="parentId!=null">parent_id=#{parentId},</if>
+        <if test="sort!=null">sort=#{sort},</if>
+        <if test="createDate!=null">create_date=#{createDate},</if>
+        <if test="icon!=null">icon=#{icon},</if>
+        update_date=now()
+        WHERE id=#{id}
+    </update>
+
+    <!--根据id获取详情-->
+    <select id="findById" resultType="com.kunlun.entity.Category">
+        SELECT
+        id,
+        category_name,
+        create_date,
+        update_date,
+        parent_id,
+        sort,
+        icon,
+        status
+        FROM t_category
+        WHERE  id=#{id}
+    </select>
 </mapper>

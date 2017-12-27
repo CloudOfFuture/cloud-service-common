@@ -52,4 +52,31 @@ public interface CategoryMapper {
      * @return
      */
     Integer add(Category category);
+
+
+    /**
+     * 根据id校验类目名称
+     *
+     * @param id
+     * @param categoryName
+     * @return
+     */
+    Integer validByNameAndId(@Param("id") Long id,@Param("categoryName") String categoryName);
+
+
+    /**
+     * 修改类目信息
+     *
+     * @param category
+     * @return
+     */
+    Integer modify(Category category);
+
+    /**
+     * 根据id获取详情
+     *
+     * @param id
+     * @return
+     */
+    Category findById(@Param("id") Long id);
 }

@@ -69,12 +69,62 @@ public class CategoryServiceImpl implements CategoryService {
         }
         Integer resultName = categoryMapper.validCategoryName(category.getCategoryName());
         if (resultName > 0) {
-            return new DataRet<>("ERROR","名称已存在");
+            return new DataRet<>("ERROR", "名称已存在");
         }
-        Integer result=categoryMapper.add(category);
-        if (result>0){
+        Integer result = categoryMapper.add(category);
+        if (result > 0) {
             return new DataRet<>("新增成功");
         }
-        return new DataRet<>("ERROR","新增失败");
+        return new DataRet<>("ERROR", "新增失败");
+    }
+
+
+    /**
+     * 修改类目
+     *
+     * @param category
+     * @return
+     */
+    @Override
+    public DataRet<String> modify(Category category) {
+        if (category.getId() == null) {
+            return new DataRet<>("ERROR", "参数错误");
+        }
+        int count = categoryMapper.validByNameAndId(category.getId(), category.getCategoryName());
+        if (count > 0) {
+            return new DataRet<>("ERROR", "已经存在相同名字的类目");
+        }
+        if (category.getParentId().intValue() == category.getId().intValue()) {
+            return new DataRet<>("ERROR", "修改失败,父id不能为当前记录id");
+        }
+        Integer result = categoryMapper.modify(category);
+        if (result > 0) {
+            return new DataRet<>("修改成功");
+        }
+        return new DataRet<>("ERROR", "修改失败");
+    }
+
+
+    /**
+     * 根据id获取类目详情
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public DataRet<Category> findById(Long id) {
+        if (id == null) {
+            return new DataRet<>("ERROR", "参数错误");
+        }
+        Category category = categoryMapper.findById(id);
+        if (category == null) {
+            return new DataRet<>("ERROR", "查无结果");
+        }
+        return new DataRet<>(category);
+    }
+
+    @Override
+    public DataRet<String> deleteById(Long id) {
+        return null;
     }
 }

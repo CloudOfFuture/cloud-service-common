@@ -34,4 +34,23 @@ public interface CategoryService {
      * @return
      */
     DataRet<String> add(Category category);
+
+
+    /**
+     * 修改类目
+     *
+     * @param category
+     * @return
+     */
+    DataRet<String> modify(Category category);
+
+    /**
+     * 根据id获取类目详情
+     *
+     * @param id
+     * @return
+     */
+    DataRet<Category> findById(Long id);
+
+    DataRet<String> deleteById(Long id);
 }

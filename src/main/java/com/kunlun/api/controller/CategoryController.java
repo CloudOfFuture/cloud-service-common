@@ -55,4 +55,40 @@ public class CategoryController {
     public DataRet<String> addCategory(@RequestBody Category category){
         return categoryService.add(category);
     }
+
+
+    /**
+     * 修改类目
+     *
+     * @param category Category
+     * @return
+     */
+    @PostMapping("/modify")
+    public DataRet<String> modify(@RequestBody Category category) {
+        return categoryService.modify(category);
+    }
+
+
+    /**
+     * 查询详情
+     *
+     * @param id Long
+     * @return
+     */
+    @GetMapping("/findById")
+    public DataRet<Category> findById(@RequestParam(value = "id") Long id) {
+        return categoryService.findById(id);
+    }
+
+
+    /**
+     * 删除类目
+     *
+     * @param id Long
+     * @return
+     */
+    @PostMapping("deleteById")
+    public DataRet<String> deleteById(Long id) {
+        return categoryService.deleteById(id);
+    }
 }
