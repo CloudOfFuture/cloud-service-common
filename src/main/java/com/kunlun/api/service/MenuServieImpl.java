@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.kunlun.api.client.UserClient;
 import com.kunlun.api.mapper.MenuMapper;
 import com.kunlun.entity.SysMenu;
+import com.kunlun.enums.CommonEnum;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,14 @@ public class MenuServieImpl implements MenuService {
 
     @Override
     public DataRet add(SysMenu sysMenu) {
-        Integer validCount = menuMapper.validByNameAndUrl(sysMenu.getMenuName(), sysMenu.getUrl());
+        if (StringUtils.isEmpty(sysMenu.getMenuType())) {
+            return new DataRet("ERROR", "菜单类型不能为空");
+        }
+        Integer validCount = menuMapper.validByName(sysMenu.getMenuName());
+        if (validCount > 0) {
+            return new DataRet("ERROR", "菜单名称已存在");
+        }
+        validCount = menuMapper.validByNameAndUrl(sysMenu.getMenuName(), sysMenu.getUrl());
         if (validCount > 0) {
             return new DataRet("ERROR", "菜单名称或地址已存在");
         }
@@ -74,7 +82,7 @@ public class MenuServieImpl implements MenuService {
         if (menu == null) {
             return new DataRet("ERROR", "查无结果");
         }
-       return new DataRet<>(menu);
+        return new DataRet<>(menu);
     }
 
     @Override
@@ -82,17 +90,16 @@ public class MenuServieImpl implements MenuService {
         if (id == null) {
             return new DataRet("ERROR", "参数错误");
         }
-        Integer result=menuMapper.validDelete(id);
-        if(result>0){
+        Integer result = menuMapper.validDelete(id);
+        if (result > 0) {
             return new DataRet("ERROR", "删除失败,菜单正在使用中");
         }
         Integer delResult = menuMapper.deleteById(id);
-        if (delResult==0) {
+        if (delResult == 0) {
             return new DataRet("ERROR", "删除失败");
         }
         return new DataRet<>("删除成功");
     }
-
 
 
     @Override
@@ -100,14 +107,13 @@ public class MenuServieImpl implements MenuService {
         if (userId == null) {
             return new DataRet("ERROR", "参数错误");
         }
-        //TODO:
         DataRet validResult = userClient.validAdmin(userId);
         List<SysMenu> list;
         if (validResult.isSuccess()) {
             //超级管理员用户菜单
-            list = menuMapper.findMenuListByRoleId(null, null, 0);
+            list = menuMapper.findMenuListByRoleId(null, null, CommonEnum.PARENT_MENU.getCode());
             list.forEach(menu -> {
-                List<SysMenu> childMenuList = menuMapper.findMenuListByRoleId(null, menu.getId(), 1);
+                List<SysMenu> childMenuList = menuMapper.findMenuListByRoleId(null, menu.getId(), CommonEnum.SUBMENU.getCode());
                 menu.setLeaf(childMenuList);
             });
         } else {
@@ -123,22 +129,22 @@ public class MenuServieImpl implements MenuService {
     @Override
     public DataRet findRootMenu() {
         List<SysMenu> data = menuMapper.findRootMenuList();
-        if(data.size()==0){
-            return new DataRet<>("ERROR","查无结果");
+        if (data.size() == 0) {
+            return new DataRet<>("ERROR", "查无结果");
         }
         return new DataRet<>(data);
     }
 
     @Override
     public DataRet findByRoleId(Long roleId) {
-        List<SysMenu> list = menuMapper.findMenuListByRoleId(roleId, null, 0);
+        List<SysMenu> list = menuMapper.findMenuListByRoleId(roleId, null, CommonEnum.PARENT_MENU.getCode());
         list.forEach(item -> {
             //二级菜单
-            List<SysMenu> childMenus = menuMapper.findMenuListByRoleId(roleId, item.getId(), 1);
+            List<SysMenu> childMenus = menuMapper.findMenuListByRoleId(roleId, item.getId(), CommonEnum.SUBMENU.getCode());
             item.setLeaf(childMenus);
         });
-        if(list.size()==0){
-            return new DataRet<>("ERROR","查无结果");
+        if (list.size() == 0) {
+            return new DataRet<>("ERROR", "查无结果");
         }
         return new DataRet<>(list);
     }

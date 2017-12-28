@@ -35,7 +35,7 @@ public interface MenuMapper {
     /**
      * 修改
      *
-     * @param sysMenu  SysMenu
+     * @param sysMenu SysMenu
      * @return Integer
      */
     Integer update(SysMenu sysMenu);
@@ -57,11 +57,21 @@ public interface MenuMapper {
      */
     Integer deleteById(@Param("id") Long id);
 
+
+    /**
+     * 名称 校验
+     *
+     * @param menuName String
+     * @return Integer
+     */
+    Integer validByName(@Param("menuName") String menuName);
+
+
     /**
      * 名称-url校验
      *
      * @param menuName String
-     * @param url  String
+     * @param url      String
      * @return Integer
      */
     Integer validByNameAndUrl(@Param("menuName") String menuName,
@@ -70,9 +80,9 @@ public interface MenuMapper {
     /**
      * 名称-id-url校验-id
      *
-     * @param id   Long
+     * @param id       Long
      * @param menuName String
-     * @param url  String
+     * @param url      String
      * @return Integer
      */
     Integer validByIdAndNameAndUrl(@Param("id") Long id,
@@ -108,10 +118,11 @@ public interface MenuMapper {
      */
     List<SysMenu> findMenuListByRoleId(@Param("roleId") Long roleId,
                                        @Param("parentId") Long parentId,
-                                       @Param("type") Integer type);
+                                       @Param("type") String type);
 
     /**
      * 菜单删除校验
+     *
      * @param id Long
      * @return Integer
      */

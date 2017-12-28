@@ -96,6 +96,14 @@
         WHERE  id=#{id}
     </update>
 
+
+    <!--查询名称和url数量-->
+    <select id="validByName" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM  t_sys_menu
+        WHERE  menu_name=#{menuName} AND status='NORMAL'
+    </select>
+
     <!--查询名称和url数量-->
     <select id="validByNameAndUrl" resultType="java.lang.Integer">
         SELECT COUNT(*)
@@ -181,8 +189,8 @@
         WHERE 1=1
         AND status='NORMAL'
         <if test="roleId!=null">AND menurole.role_id=#{roleId}</if>
-        <if test="type==PARENT_MENU ">AND menu.pid=0</if>
-        <if test="type==SUBMENU ">AND menu.pid=#{parentId}</if>
+        <if test="type=='PARENT_MENU' ">AND menu.pid=0</if>
+        <if test="type=='SUBMENU' ">AND menu.pid=#{parentId}</if>
         GROUP BY menu.id
         ORDER BY menu.sort ASC
     </select>
