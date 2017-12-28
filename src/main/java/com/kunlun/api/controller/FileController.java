@@ -43,7 +43,7 @@ public class FileController {
      * @param mallImg 图片对象
      * @return DataRet
      */
-    @GetMapping(value = "/add")
+    @PostMapping(value = "/add")
     public DataRet add(@RequestBody MallImg mallImg) {
         return fileService.add(mallImg);
     }
