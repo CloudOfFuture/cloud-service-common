@@ -83,4 +83,31 @@
         FROM t_category
         WHERE  id=#{id}
     </select>
+
+    <!--根据id删除类目-->
+    <update id="deleteById">
+        UPDATE t_category SET status='UN_NORMAL' WHERE id =#{id}
+    </update>
+
+    <!--根据id删除类目-->
+    <update id="updateStatus">
+        UPDATE t_category SET status=#{status} WHERE id =#{id}
+    </update>
+
+    <!--模糊查询-->
+    <select id="findByCondition" resultType="com.kunlun.entity.Category">
+        SELECT
+        id,
+        category_name,
+        create_date,
+        update_date,
+        parent_id,
+        sort,
+        icon,
+        status
+        FROM t_category WHERE 1=1
+        <if test="searchKey!=null">AND category_name LIKE #{searchKey}</if>
+        <if test="type!=null and type=='PARENT'">AND parent_id=0</if>
+        <if test="type!=null and type=='CHILD'">AND parent_id!=0</if>
+    </select>
 </mapper>

@@ -1,8 +1,10 @@
 package com.kunlun.api.service;
 
+import com.alibaba.druid.util.StringUtils;
 import com.kunlun.api.mapper.CategoryMapper;
 import com.kunlun.entity.Category;
 import com.kunlun.result.DataRet;
+import com.kunlun.result.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -123,8 +125,55 @@ public class CategoryServiceImpl implements CategoryService {
         return new DataRet<>(category);
     }
 
+    /**
+     * 根据id删除类目
+     *
+     * @param id
+     * @return
+     */
     @Override
     public DataRet<String> deleteById(Long id) {
+        if (id == null) {
+            return new DataRet<>("ERROR", "参数错误");
+        }
+        Integer result = categoryMapper.deleteById(id);
+        if (result > 0) {
+            return new DataRet<>("删除成功");
+        }
+        return new DataRet<>("ERROR","删除失败");
+    }
+
+
+    /**
+     * 更改类目状态
+     *
+     * @param status
+     * @param id
+     * @return
+     */
+    @Override
+    public DataRet<String> updateStatus(String status, Long id) {
+        if (id == null || StringUtils.isEmpty(status)) {
+            return new DataRet<>("ERROR","参数错误");
+        }
+        Integer result=categoryMapper.updateStatus(status, id);
+        if (result==0){
+            return new DataRet<>("ERROR","修改状态失败");
+        }
+        return new DataRet<>("修改状态成功");
+    }
+
+    /**
+     * 查询列表
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param type
+     * @param searchKey
+     * @return
+     */
+    @Override
+    public PageResult findByCondition(Integer pageNo, Integer pageSize, String type, String searchKey) {
         return null;
     }
 }

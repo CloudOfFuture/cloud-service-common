@@ -79,4 +79,22 @@ public interface CategoryMapper {
      * @return
      */
     Category findById(@Param("id") Long id);
+
+    /**
+     * 删除类目
+     *
+     * @param id
+     * @return
+     */
+    Integer deleteById(@Param("id") Long id);
+
+
+    /**
+     * 修改类目状态
+     *
+     * @param status
+     * @param id
+     * @return
+     */
+    Integer updateStatus(@Param("status") String status,@Param("id") Long id);
 }

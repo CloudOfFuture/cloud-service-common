@@ -3,6 +3,7 @@ package com.kunlun.api.controller;
 import com.kunlun.api.service.CategoryService;
 import com.kunlun.entity.Category;
 import com.kunlun.result.DataRet;
+import com.kunlun.result.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,5 +92,33 @@ public class CategoryController {
     @PostMapping("deleteById")
     public DataRet<String> deleteById(Long id) {
         return categoryService.deleteById(id);
+    }
+
+    /**
+     * 修改类目状态
+     * 状态 NORMAL UN_NORMAL
+     *
+     * @return
+     */
+    @PostMapping("/updateStatus")
+    public DataRet<String> updateStatus(String status, Long id) {
+        return categoryService.updateStatus(status, id);
+    }
+
+    /**
+     * 列表查询
+     *
+     * @param pageNo    页码
+     * @param pageSize  数量
+     * @param searchKey 模糊查询信息
+     * @param type      PARENT CHILD
+     * @return
+     */
+    @GetMapping("/findByCondition")
+    public PageResult findByCondition(@RequestParam("pageNo") Integer pageNo,
+                                      @RequestParam("pageSize") Integer pageSize,
+                                      @RequestParam("type") String type,
+                                      @RequestParam("searchKey") String searchKey) {
+        return categoryService.findByCondition(pageNo, pageSize, type, searchKey);
     }
 }

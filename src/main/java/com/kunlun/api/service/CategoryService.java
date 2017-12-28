@@ -2,6 +2,7 @@ package com.kunlun.api.service;
 
 import com.kunlun.entity.Category;
 import com.kunlun.result.DataRet;
+import com.kunlun.result.PageResult;
 
 /**
  * @author by hmy
@@ -52,5 +53,31 @@ public interface CategoryService {
      */
     DataRet<Category> findById(Long id);
 
+    /**
+     * 根据id删除类目
+     *
+     * @param id
+     * @return
+     */
     DataRet<String> deleteById(Long id);
+
+    /**
+     * 更改类目状态
+     *
+     * @param status
+     * @param id
+     * @return
+     */
+    DataRet<String> updateStatus(String status, Long id);
+
+    /**
+     * 查询列表
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param type
+     * @param searchKey
+     * @return
+     */
+    PageResult findByCondition(Integer pageNo, Integer pageSize, String type, String searchKey);
 }
