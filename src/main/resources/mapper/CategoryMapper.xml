@@ -30,7 +30,7 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO t_cagetory(
+        INSERT INTO t_category(
         category_name,
         create_date,
         status,
@@ -53,7 +53,7 @@
 
     <!--根据id校验名称-->
     <select id="validByNameAndId" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM t_category WHERE category_name=#{categoryName} AND id!={id} AND status='NORMAL'
+        SELECT COUNT(*) FROM t_category WHERE category_name=#{categoryName} AND id!=#{id} AND status='NORMAL'
     </select>
 
     <!--修改类目-->

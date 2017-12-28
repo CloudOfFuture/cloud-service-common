@@ -103,7 +103,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (count > 0) {
             return new DataRet<>("ERROR", "已经存在相同名字的类目");
         }
-        if (category.getParentId().intValue() == category.getId().intValue()) {
+        if (category.getParentId() == category.getId()) {
             return new DataRet<>("ERROR", "修改失败,父id不能为当前记录id");
         }
         //删除操作
