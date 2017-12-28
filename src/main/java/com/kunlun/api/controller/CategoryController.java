@@ -1,11 +1,14 @@
 package com.kunlun.api.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.kunlun.api.service.CategoryService;
 import com.kunlun.entity.Category;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author by hmy
@@ -89,8 +92,8 @@ public class CategoryController {
      * @param id Long
      * @return
      */
-    @PostMapping("deleteById")
-    public DataRet<String> deleteById(Long id) {
+    @PostMapping("/deleteById")
+    public DataRet<String> deleteById(@RequestParam(value = "id") Long id) {
         return categoryService.deleteById(id);
     }
 
@@ -101,7 +104,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/updateStatus")
-    public DataRet<String> updateStatus(String status, Long id) {
+    public DataRet<String> updateStatus(@RequestParam(value = "status") String status,@RequestParam(value = "id") Long id) {
         return categoryService.updateStatus(status, id);
     }
 
@@ -117,8 +120,35 @@ public class CategoryController {
     @GetMapping("/findByCondition")
     public PageResult findByCondition(@RequestParam("pageNo") Integer pageNo,
                                       @RequestParam("pageSize") Integer pageSize,
-                                      @RequestParam("type") String type,
-                                      @RequestParam("searchKey") String searchKey) {
+                                      @RequestParam(value = "type",required = false) String type,
+                                      @RequestParam(value = "searchKey",required = false) String searchKey) {
         return categoryService.findByCondition(pageNo, pageSize, type, searchKey);
+    }
+
+
+    /**
+     * 商品批量绑定类目
+     *
+     * @param jsonObject
+     * @return
+     */
+    @PostMapping("/bindBatch")
+    public DataRet<String> bindBatch(@RequestBody JSONObject jsonObject){
+        Long categoryId=jsonObject.getObject("categoryId",Long.class);
+        List<Long> goodIdList=jsonObject.getJSONArray("idList").toJavaList(Long.class);
+        return categoryService.bindBatch(categoryId,goodIdList);
+    }
+
+
+    /**
+     * 商品批量解绑
+     *
+     * @param jsonObject
+     * @return
+     */
+    @PostMapping("/unbindBatch")
+    public DataRet<String> unbindBatch(@RequestBody JSONObject jsonObject){
+        List<Long>goodIdList=jsonObject.getJSONArray("idList").toJavaList(Long.class);
+        return categoryService.unbindBatch(goodIdList);
     }
 }

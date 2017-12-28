@@ -1,8 +1,11 @@
 package com.kunlun.api.mapper;
 
+import com.github.pagehelper.Page;
 import com.kunlun.entity.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 /**
@@ -32,7 +35,7 @@ public interface CategoryMapper {
      * @param goodId
      * @return
      */
-    Integer unbindWithGoodId(@Param("goodId") Long goodId);
+    Integer unbindGoodId(@Param("goodId") Long goodId);
 
 
     /**
@@ -97,4 +100,39 @@ public interface CategoryMapper {
      * @return
      */
     Integer updateStatus(@Param("status") String status,@Param("id") Long id);
+
+
+    /**
+     * 分页模糊搜索
+     *
+     * @param searchKey
+     * @param type
+     * @return
+     */
+    Page<Category> findByCondition(@Param("searchKey") String searchKey,@Param("type") String type);
+
+
+    /**
+     * 批量解绑
+     *
+     * @param goodIdList
+     * @return
+     */
+    Integer unbindCategoryGood(@Param("goodIdList") List<Long> goodIdList);
+
+    /**
+     * 查询集合中id是否已经绑定
+     *
+     * @param idList
+     * @return
+     */
+    Integer findCountByCategoryIdList(@Param("idList") List<Long> idList);
+
+    /**
+     * 根据一级类目查询子类目列表
+     *
+     * @param parentId
+     * @return
+     */
+    List<Category> findByParentId(@Param("parentId") Long parentId);
 }
