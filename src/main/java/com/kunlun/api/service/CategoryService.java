@@ -4,6 +4,8 @@ import com.kunlun.entity.Category;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
 
+import java.util.List;
+
 /**
  * @author by hmy
  * @version <0.1>
@@ -80,4 +82,22 @@ public interface CategoryService {
      * @return
      */
     PageResult findByCondition(Integer pageNo, Integer pageSize, String type, String searchKey);
+
+    /**
+     * 商品批量绑定类目
+     *
+     * @param categoryId
+     * @param goodIdList
+     * @return
+     */
+    DataRet<String> bindBatch(Long categoryId, List<Long> goodIdList);
+
+
+    /**
+     * 商品批量解绑
+     *
+     * @param goodIdList
+     * @return
+     */
+    DataRet<String> unbindBatch(List<Long> goodIdList);
 }
