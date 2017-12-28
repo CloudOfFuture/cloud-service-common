@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kunlun.api.mapper.RoleMapper">
+
+
+    <!--校验名称是否存在-->
+    <select id="validName" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_sys_role WHERE name=#{name}
+    </select>
+
+
+    <!--新增角色-->
+    <insert id="add" parameterType="com.kunlun.entity.SysRole">
+        INSERT INTO t_sys_role(
+        name,
+        remark,
+        status,
+        operator,
+        role_level ,
+        create_date)
+        VALUES (
+        #{name},
+        #{remark},
+        #{status},
+        #{operator},
+        #{roleLevel},
+        now())
+    </insert>
+
+    <!--根据id校验名称-->
+    <select id="validByNameAndName" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_sys_role WHERE name=#{name} AND id!=#{id}
+    </select>
+
+    <!--校验用户是否与角色绑定-->
+    <select id="validById" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_sys_user_role WHERE role_id=#{id}
+    </select>
+
+    <!--修改信息-->
+    <update id="update" parameterType="com.kunlun.entity.SysRole">
+        UPDATE t_sys_role SET
+        <if test="name!=null">name=#{name},</if>
+        <if test="remark!=null">remark=#{remark},</if>
+        <if test="operator!=null">operator=#{operator},</if>
+        <if test="status!=null">status=#{status}</if>
+        update_date=now()
+        WHERE id=#{id}
+    </update>
+
+    <!--删除角色-->
+    <update id="deleteById">
+        UPDATE t_sys_role
+        SET
+        status='UN_NORMAL',
+        update_date=now()
+        WHERE id=#{id}
+    </update>
+
+    <!--获取详情-->
+    <select id="findById" resultType="com.kunlun.entity.SysRole">
+        SELECT
+        id,
+        name,
+        remark,
+        create_date,
+        operator,
+        role_level,
+        update_date,
+        status
+        FROM t_sys_role
+        WHERE id=#{id}
+    </select>
+
+    <!--获取列表-->
+    <select id="findByCondition" resultType="com.kunlun.entity.SysRole">
+        SELECT
+        id,
+        name,
+        remark,
+        create_date,
+        operator,
+        role_level,
+        update_date,
+        status
+        FROM t_sys_role
+        WHERE 1=1
+        <if test="searchKey!=null">AND CONCAT_WS('',name,remark) like #{searchKey}</if>
+    </select>
+
+    <!--清空角色菜单关系表-->
+    <delete id="clearRelation">
+        delete from t_sys_menu_role_relation where role_id=#{roleId}
+    </delete>
+
+    <select id="findPidByMenuId" resultType="java.lang.Long">
+        SELECT pid FROM t_sys_menu WHERE  id=#{menuId}
+    </select>
+
+    <select id="queryExistByPid" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_sys_menu_role_relation
+        WHERE role_id=#{roleId} AND menu_id=#{parentId}
+    </select>
+
+    <insert id="addRoleMenuRelation">
+        INSERT INTO t_sys_menu_role_relation(role_id,menu_id)
+        VALUES (#{roleId},#{menuId})
+    </insert>
+
+    <insert id="insertPid" parameterType="java.lang.Long">
+        INSERT INTO
+        t_sys_menu_role_relation(role_id,menu_id)
+        VALUES (#{roleId},#{parentId})
+    </insert>
+</mapper>
