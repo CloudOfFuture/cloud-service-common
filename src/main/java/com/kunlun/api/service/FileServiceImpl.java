@@ -168,6 +168,22 @@ public class FileServiceImpl implements FileService {
         return new PageResult<>(page);
     }
 
+    @Override
+    public DataRet add(MallImg mallImg) {
+        if (CommonEnum.TYPE_IMG_ID_PHOTO.getCode().equals(mallImg.getType())) {
+            //证件照，
+            List<MallImg> imgList = fileMapper.findIdPhotoByUserId(mallImg.getTargetId());
+            if (imgList.size() == 0) {
+                //不存在证件照直接添加
+                fileMapper.add(mallImg);
+            } else {
+                imgList.forEach(item -> fileMapper.deleteByUrl(item.getUrl()));
+                fileMapper.add(mallImg);
+            }
+        }
+        return new DataRet<>("添加成功");
+    }
+
     /**
      * 图片裁剪
      */

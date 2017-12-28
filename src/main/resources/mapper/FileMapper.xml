@@ -65,4 +65,15 @@
         <if test="targetId!=null ">,target_id=#{targetId}</if>
         WHERE id=#{id}
     </update>
+
+
+    <select id="findIdPhotoByUserId" resultType="com.kunlun.entity.MallImg">
+        SELECT
+        id,
+        target_id,
+        url
+        FROM  t_mall_img
+        WHERE target_id=#{targetId}
+        AND type='TYPE_IMG_ID_PHOTO'
+    </select>
 </mapper>
