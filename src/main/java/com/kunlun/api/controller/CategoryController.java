@@ -92,8 +92,8 @@ public class CategoryController {
      * @param id Long
      * @return
      */
-    @PostMapping("deleteById")
-    public DataRet<String> deleteById(Long id) {
+    @PostMapping("/deleteById")
+    public DataRet<String> deleteById(@RequestParam(value = "id") Long id) {
         return categoryService.deleteById(id);
     }
 
@@ -104,7 +104,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/updateStatus")
-    public DataRet<String> updateStatus(String status, Long id) {
+    public DataRet<String> updateStatus(@RequestParam(value = "status") String status,@RequestParam(value = "id") Long id) {
         return categoryService.updateStatus(status, id);
     }
 
