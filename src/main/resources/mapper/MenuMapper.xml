@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunlun.api.mapper.MenuMapper">
+
+    <!--新增-->
+    <insert id="add" parameterType="com.kunlun.entity.SysMenu">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO t_sys_menu
+        (menu_name,
+        pid,
+        url,
+        menu_type,
+        status,
+        icon,
+        description,
+        operator,
+        sort,
+        create_date)
+        VALUES
+        (#{menuName},
+        #{pid},
+        #{url},
+        #{menuType},
+        #{status},
+        #{icon},
+        #{description},
+        #{operator},
+        #{sort},
+        now())
+    </insert>
+
+    <!--模糊查询-->
+    <select id="findByCondition" resultType="com.kunlun.entity.SysMenu">
+        SELECT
+        id,
+        menu_name,
+        pid,
+        url,
+        menu_type,
+        status,
+        icon,
+        sort,
+        create_date,
+        update_date,
+        description,
+        operator
+        FROM t_sys_menu WHERE 1=1
+        <if test="searchKey!=null and searchKey!='' ">AND CONCAT_WS('',menu_name,description) LIKE #{searchKey}</if>
+        ORDER BY pid ASC
+    </select>
+
+
+    <!--修改-->
+    <update id="update" parameterType="com.kunlun.entity.SysMenu">
+        UPDATE t_sys_menu SET
+        <if test="menuName!=null and menuName!=''">menu_name=#{menuName},</if>
+        <if test="pid!=null">pid=#{pid},</if>
+        <if test="url!=null">url=#{url},</if>
+        <if test="menuType!=null and menuType!=''">menu_type=#{menuType},</if>
+        <if test="status!=null and status!=''">status=#{status},</if>
+        <if test="icon!=null and icon!=''">icon=#{icon},</if>
+        <if test="sort!=null">sort=#{sort},</if>
+        <if test="description!=null and description!=''">description=#{description},</if>
+        <if test="operator!=null">operator=#{operator},</if>
+        update_date=now()
+        WHERE id=#{id}
+    </update>
+
+    <!--根据ID查询详情-->
+    <select id="findById" resultType="com.kunlun.entity.SysMenu">
+        SELECT
+        id,
+        menu_name,
+        pid,
+        url,
+        menu_type,
+        status,
+        icon,
+        sort,
+        create_date,
+        update_date,
+        description,
+        operator
+        FROM  t_sys_menu
+        WHERE  id=#{id}
+    </select>
+
+    <!--根据ID删除活动,不做物理删除-->
+    <update id="deleteById">
+        UPDATE  t_sys_menu
+        SET  status='UN_NORMAL',update_date=NOW()
+        WHERE  id=#{id}
+    </update>
+
+
+    <!--查询名称和url数量-->
+    <select id="validByName" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM  t_sys_menu
+        WHERE  menu_name=#{menuName} AND status='NORMAL'
+    </select>
+
+    <!--查询名称和url数量-->
+    <select id="validByNameAndUrl" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM  t_sys_menu
+        WHERE  menu_name=#{menuName} AND status='NORMAL' AND url=#{url}
+    </select>
+
+
+    <!--活动id、名称校验-->
+    <select id="validByIdAndNameAndUrl" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM t_sys_menu
+        WHERE url =#{url}
+        AND menu_name =#{menuName}
+        AND id!=#{id}
+        AND status='NORMAL'
+    </select>
+
+
+    <!--查询所有一级菜单-->
+    <select id="findRootMenuList" resultType="com.kunlun.entity.SysMenu">
+        SELECT
+        id,
+        menu_name,
+        pid,
+        url,
+        menu_type,
+        status,
+        icon,
+        sort,
+        create_date,
+        update_date,
+        description,
+        operator
+        FROM  t_sys_menu
+        WHERE  pid='0'
+    </select>
+
+    <!--根据userId-parentId查询列表-->
+    <select id="findByParentIdAndUserId" resultType="com.kunlun.entity.SysMenu">
+        SELECT
+        menu.id,
+        menu.menu_name,
+        menu.pid,
+        menu.url,
+        menu.menu_type,
+        menu.status,
+        menu.icon,
+        menu.sort,
+        menu.create_date,
+        menu.update_date,
+        menu.description,
+        menu.operator
+        FROM t_sys_menu menu
+        LEFT JOIN t_sys_menu_role_relation menurole ON menurole.menu_id=menu.id
+        LEFT JOIN t_sys_user_role tuserrole ON tuserrole.role_id=menurole.role_id
+        WHERE 1=1
+        AND status='NORMAL'
+        AND tuserrole.user_id=#{userId}
+        <if test="parentId==null">AND menu.pid=0</if>
+        <if test="parentId!=null">AND menu.pid=#{parentId}</if>
+        GROUP BY menu.id
+        ORDER BY menu.sort ASC
+    </select>
+
+    <!--查询所有一级 二级菜单-->
+    <select id="findMenuListByRoleId" resultType="com.kunlun.entity.SysMenu">
+        SELECT
+        menu.id,
+        menu.menu_name,
+        menu.pid,
+        menu.url,
+        menu.menu_type,
+        menu.status,
+        menu.icon,
+        menu.sort,
+        menu.create_date,
+        menu.update_date,
+        menu.description,
+        menu.operator
+        FROM t_sys_menu menu
+        LEFT JOIN t_sys_menu_role_relation menurole ON menurole.menu_id=menu.id
+        WHERE 1=1
+        AND status='NORMAL'
+        <if test="roleId!=null">AND menurole.role_id=#{roleId}</if>
+        <if test="type=='PARENT_MENU' ">AND menu.pid=0</if>
+        <if test="type=='SUBMENU' ">AND menu.pid=#{parentId}</if>
+        GROUP BY menu.id
+        ORDER BY menu.sort ASC
+    </select>
+
+    <select id="validDelete" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM t_sys_user_role tur
+        LEFT JOIN t_sys_role tr ON (tr.id=tur.role_id AND tr.status='NORMAL')
+        LEFT JOIN t_sys_menu_role_relation tmrr ON tr.id=tmrr.role_id
+        WHERE tmrr.menu_id=#{id}
+    </select>
+</mapper>
