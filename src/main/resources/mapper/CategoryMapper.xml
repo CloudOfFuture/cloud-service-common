@@ -126,7 +126,8 @@
         SELECT COUNT(*)
         FROM t_category_good tcate
         LEFT JOIN t_good good ON tcate.good_id=good.id
-        WHERE good.on_sale='ON_SALE' AND tcate.category_id IN
+        WHERE good.on_sale='ON_SALE' AND
+        tcate.category_id IN
         <foreach collection="idList" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>

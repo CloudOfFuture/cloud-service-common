@@ -118,7 +118,7 @@ public interface CategoryMapper {
      * @param goodIdList
      * @return
      */
-    Integer unbindCategoryGood(List<Long> goodIdList);
+    Integer unbindCategoryGood(@Param("goodIdList") List<Long> goodIdList);
 
     /**
      * 查询集合中id是否已经绑定
@@ -126,7 +126,7 @@ public interface CategoryMapper {
      * @param idList
      * @return
      */
-    Integer findCountByCategoryIdList(List<Long> idList);
+    Integer findCountByCategoryIdList(@Param("idList") List<Long> idList);
 
     /**
      * 根据一级类目查询子类目列表
