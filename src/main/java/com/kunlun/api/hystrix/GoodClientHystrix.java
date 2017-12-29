@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GoodClientHystrix implements GoodClient {
     @Override
-    public DataRet updateGoodStock(JSONArray jsonArray) {
+    public DataRet updateStocks(JSONArray jsonArray) {
         return new DataRet("ERROR", "更新失败");
     }
 }

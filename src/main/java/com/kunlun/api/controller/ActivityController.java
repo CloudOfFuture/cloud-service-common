@@ -79,7 +79,7 @@ public class ActivityController {
      * @param id 活动id、主键
      * @return DataRet
      */
-    @PostMapping("/findById")
+    @GetMapping("/findById")
     public DataRet findById(@RequestParam(value = "id") Long id) {
         return activityService.findById(id);
     }
@@ -97,7 +97,7 @@ public class ActivityController {
     @GetMapping("/findByCondition")
     public PageResult findByCondition(@RequestParam(value = "pageNo") Integer pageNo,
                                       @RequestParam(value = "pageSize") Integer pageSize,
-                                      @RequestParam(value = "type") String type,
+                                      @RequestParam(value = "type", required = false) String type,
                                       @RequestParam(value = "status", required = false) String status,
                                       @RequestParam(value = "searchKey", required = false) String searchKey) {
         return activityService.findByCondition(pageNo, pageSize, type, status, searchKey);
