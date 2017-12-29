@@ -115,4 +115,24 @@
         t_sys_menu_role_relation(role_id,menu_id)
         VALUES (#{roleId},#{parentId})
     </insert>
+
+    <!--校验用户是否已经分配角色-->
+    <select id="validUserId" resultType="java.lang.Integer">
+       SELECT COUNT(*) FROM t_sys_user_role WHERE user_id=#{userId}
+    </select>
+
+    <!--用户更新角色-->
+    <update id="updateRoleId" parameterType="java.lang.Long">
+        UPDATE t_sys_user_role SET role_id=#{roleId} WHERE user_id=#{userId}
+    </update>
+
+    <!--用户新增角色-->
+    <insert id="addRoleIdAndUserId" parameterType="java.lang.Long">
+        INSERT INTO t_sys_user_role(
+        user_id,
+        role_id)
+        VALUES (
+        #{userId},
+        #{roleId})
+    </insert>
 </mapper>

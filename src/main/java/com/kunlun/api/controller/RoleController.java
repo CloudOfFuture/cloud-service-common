@@ -94,10 +94,24 @@ public class RoleController {
      * @param object
      * @return
      */
-    @PostMapping("/distribution")
+    @PostMapping("/distribution/menu")
     public DataRet<String> getMenu(@RequestBody JSONObject object){
         Long roleId=object.getObject("roleId",Long.class);
         List<Long>menuIdList=object.getJSONArray("menuIdList").toJavaList(Long.class);
         return roleService.getMenu(roleId,menuIdList);
+    }
+
+
+    /**
+     * 用户分配角色
+     *
+     * @param roleId
+     * @param userId
+     * @return
+     */
+    @PostMapping("/distribution/user")
+    public DataRet<String>getUser(@RequestParam(value = "roleId") Long roleId,
+                                  @RequestParam(value = "userId") Long userId){
+        return roleService.getUser(roleId,userId);
     }
 }

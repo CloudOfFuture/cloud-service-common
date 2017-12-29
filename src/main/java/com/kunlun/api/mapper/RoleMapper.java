@@ -91,11 +91,68 @@ public interface RoleMapper {
      */
     Integer clearRelation(@Param("roleId") Long roleId);
 
+
+    /**
+     *
+     * @param menuId
+     * @return
+     */
     Long findPidByMenuId(@Param("menuId") Long menuId);
 
+
+    /**
+     *
+     *
+     * @param roleId
+     * @param parentId
+     * @return
+     */
     Integer queryExistByPid(@Param("roleId") Long roleId,@Param("parentId") Long parentId);
 
-    void addRoleMenuRelation(@Param("roleId") Long roleId,@Param("menuId") Long menuId);
+    /**
+     *
+     *
+     * @param roleId
+     * @param menuId
+     * @return
+     */
+    Integer addRoleMenuRelation(@Param("roleId") Long roleId,@Param("menuId") Long menuId);
 
-    void insertPid(@Param("roleId") Long roleId,@Param("parentId") Long parentId);
+
+    /**
+     *
+     *
+     * @param roleId
+     * @param parentId
+     * @return
+     */
+    Integer insertPid(@Param("roleId") Long roleId,@Param("parentId") Long parentId);
+
+    /**
+     * 校验用户是否已经绑定角色
+     *
+     * @param userId
+     * @return
+     */
+    Integer validUserId(@Param("userId") Long userId);
+
+
+    /**
+     * 更新用户的角色
+     *
+     * @param roleId
+     * @param userId
+     * @return
+     */
+    Integer updateRoleId(@Param("roleId") Long roleId,@Param("userId") Long userId);
+
+
+    /**
+     * 给用户分配角色
+     *
+     * @param roleId
+     * @param userId
+     * @return
+     */
+    Integer addRoleIdAndUserId(@Param("roleId") Long roleId,@Param("userId") Long userId);
 }

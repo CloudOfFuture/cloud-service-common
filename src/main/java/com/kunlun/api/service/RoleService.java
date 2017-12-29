@@ -66,4 +66,14 @@ public interface RoleService {
      * @return
      */
     DataRet<String> getMenu(Long roleId, List<Long> menuIdList);
+
+
+    /**
+     * 用户分配角色
+     *
+     * @param roleId
+     * @param userId
+     * @return
+     */
+    DataRet<String> getUser(Long roleId, Long userId);
 }
