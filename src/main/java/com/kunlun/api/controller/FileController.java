@@ -38,7 +38,7 @@ public class FileController {
     }
 
     /**
-     * 根据url查询图片
+     * 添加图片
      *
      * @param mallImg 图片对象
      * @return DataRet
