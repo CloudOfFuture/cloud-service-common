@@ -151,10 +151,7 @@ public class RoleServiceImpl implements RoleService {
         if (roleId == null || menuIdList == null || menuIdList.size() == 0) {
             return new DataRet<>("ERROR", "参数错误");
         }
-        Integer clearResult = roleMapper.clearRelation(roleId);
-        if (clearResult == 0) {
-            return new DataRet<>("ERROR", "清空失败");
-        }
+        roleMapper.clearRelation(roleId);
         menuIdList.forEach(menuId -> {
             //查询父节点
             Long parentId = roleMapper.findPidByMenuId(menuId);
@@ -190,6 +187,9 @@ public class RoleServiceImpl implements RoleService {
             }
         }
         Integer result=roleMapper.addRoleIdAndUserId(roleId,userId);
-        return null;
+        if (result>0){
+            return new DataRet<>("分配成功");
+        }
+        return new DataRet<>("ERROR","分配失败");
     }
 }
