@@ -31,7 +31,7 @@
     </insert>
 
     <!--根据id校验名称-->
-    <select id="validByNameAndName" resultType="java.lang.Integer">
+    <select id="validByNameAndId" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM t_sys_role WHERE name=#{name} AND id!=#{id}
     </select>
 
@@ -46,7 +46,7 @@
         <if test="name!=null">name=#{name},</if>
         <if test="remark!=null">remark=#{remark},</if>
         <if test="operator!=null">operator=#{operator},</if>
-        <if test="status!=null">status=#{status}</if>
+        <if test="status!=null">status=#{status},</if>
         update_date=now()
         WHERE id=#{id}
     </update>
@@ -93,7 +93,7 @@
 
     <!--清空角色菜单关系表-->
     <delete id="clearRelation">
-        delete from t_sys_menu_role_relation where role_id=#{roleId}
+        DELETE FROM t_sys_menu_role_relation WHERE role_id=#{roleId}
     </delete>
 
     <select id="findPidByMenuId" resultType="java.lang.Long">
