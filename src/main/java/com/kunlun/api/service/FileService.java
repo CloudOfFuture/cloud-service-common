@@ -72,4 +72,14 @@ public interface FileService {
      * @return
      */
     DataRet add(MallImg mallImg);
+
+
+    /**
+     * 获取图片列表
+     *
+     * @param targetId
+     * @param type
+     * @return
+     */
+    DataRet<String> list(Long targetId, String type);
 }
