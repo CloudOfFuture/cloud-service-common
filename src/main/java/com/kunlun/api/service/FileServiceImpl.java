@@ -181,6 +181,7 @@ public class FileServiceImpl implements FileService {
                 fileMapper.add(mallImg);
             }
         }
+        fileMapper.add(mallImg);
         return new DataRet<>("添加成功");
     }
 
