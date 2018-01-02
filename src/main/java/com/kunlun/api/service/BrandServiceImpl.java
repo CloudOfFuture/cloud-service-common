@@ -1,14 +1,18 @@
 package com.kunlun.api.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.kunlun.api.client.FileClient;
 import com.kunlun.api.mapper.BrandMapper;
 import com.kunlun.entity.Brand;
-import com.kunlun.entity.MallImage;
 import com.kunlun.entity.MallImg;
 import com.kunlun.result.DataRet;
+import com.kunlun.result.PageResult;
 import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 /**
  * @author by fk
@@ -50,5 +54,69 @@ public class BrandServiceImpl implements BrandService {
             return new DataRet("增加品牌成功");
         }
         return new DataRet("ERROR", "增加品牌失败");
+    }
+
+    /**
+     * 修改品牌
+     *
+     * @param brand
+     * @return
+     */
+    @Override
+    public DataRet modify(Brand brand) {
+        if (brand.getId() == null) {
+            return new DataRet("ERROR", "未找到品牌");
+        }
+        Integer result = brandMapper.validByName(brand.getBrandName());
+        if (result > 0) {
+            return new DataRet("ERROR", "品牌名字不能相同");
+        }
+        brandMapper.modify(brand);
+        return new DataRet("ERROR", "修改品牌成功");
+    }
+
+    /**
+     * 根据id查询品牌信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public DataRet findBrandById(Integer id) {
+        if (id == null) {
+            return new DataRet("ERROR", "品牌id不存在");
+        }
+        Brand brand = brandMapper.findBrandById(id);
+        if (brand == null) {
+            return new DataRet("ERROR", "未查到品牌信息");
+        }
+        return new DataRet(brand);
+    }
+
+    /**
+     * 分页查询品牌详情/模糊查询
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param searchKey
+     * @return
+     */
+    @Override
+    public PageResult findByCondition(Integer pageNo, Integer pageSize, String searchKey) {
+        if (pageNo == null && pageSize == null) {
+            return new PageResult();
+        }
+        PageHelper.startPage(pageNo, pageSize);
+        if (StringUtils.isNullOrEmpty(searchKey)) {
+            searchKey = null;
+        }
+        if (searchKey != null) {
+            searchKey = "%" + searchKey + "%";
+        }
+        Page<Brand> page = brandMapper.findByCondition(searchKey);
+        if (page.getTotal() < 0L) {
+            return new PageResult(new ArrayList());
+        }
+        return new PageResult(page);
     }
 }

@@ -1,5 +1,6 @@
 package com.kunlun.api.mapper;
 
+import com.github.pagehelper.Page;
 import com.kunlun.entity.Brand;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +28,28 @@ public interface BrandMapper {
      * @return
      */
     int add(Brand brand);
+
+    /**
+     * 根据id查找品牌详情
+     *
+     * @param id
+     * @return
+     */
+    Brand findBrandById(@Param("id") Integer id);
+
+    /**
+     * 修改品牌
+     *
+     * @param brand
+     * @return
+     */
+    int modify(Brand brand);
+
+    /**
+     * 分页查询品牌详情/模糊查询
+     *
+     * @param searchKey
+     * @return
+     */
+    Page<Brand> findByCondition(@Param("searchKey") String searchKey);
 }

@@ -33,4 +33,46 @@
         #{shortName}
         )
     </insert>
+
+    <!--根据id查询品牌详情-->
+    <select id="findBrandById" resultType="com.kunlun.entity.Brand">
+        SELECT id,
+        brand_name,
+        brand_image,
+        create_date,
+        update_date,
+        status,
+        country,
+        contact_phone,
+        contact,
+        short_name
+        FROM t_brand WHERE id=#{id}
+    </select>
+
+    <!--修改品牌-->
+    <update id="modify" parameterType="com.kunlun.entity.Brand">
+        UPDATE t_brand SET
+        <if test="brandName!=null">brand_name=#{brandName},</if>
+        <if test="brandImage!=null">brand_image=#{brandImage},</if>
+        <if test="status!=null">status=#{status},</if>
+        <if test="country!=country">country=#{country},</if>
+        <if test="contactPhone!=null">contact_phone=#{contactPhone},</if>
+        <if test="contact!=null">contact=#{contact},</if>
+        <if test="shortName!=null">short_name=#{shortName},</if>
+        update_date=now()
+        WHERE id=#{id}
+    </update>
+
+    <!--分页查询品牌信息/模糊查询-->
+    <select id="findByCondition" resultType="com.kunlun.entity.Brand">
+        SELECT id,
+        brand_name,
+        brand_image,
+        create_date,
+        status,
+        short_name
+        FROM t_brand
+        WHERE 1=1
+        <if test="searchKey!=null">AND CONCAT_WS('',brand_name,short_name) LIKE #{searchKey}</if>
+    </select>
 </mapper>
