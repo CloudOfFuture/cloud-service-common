@@ -81,5 +81,5 @@ public interface FileService {
      * @param type
      * @return
      */
-    DataRet<String> list(Long targetId, String type);
+    DataRet list(Long targetId, String type);
 }

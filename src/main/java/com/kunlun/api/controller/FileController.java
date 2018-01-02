@@ -117,7 +117,7 @@ public class FileController {
      * @return
      */
     @GetMapping("/findList")
-    public DataRet<String> list(@RequestParam(value = "type") String type,
+    public DataRet list(@RequestParam(value = "type") String type,
                            @RequestParam(value = "targetId") Long targetId){
         return fileService.list(targetId,type);
     }
