@@ -21,6 +21,6 @@ public interface GoodClient {
      * @param jsonArray JSONArray
      * @return DataRet
      */
-    @PostMapping("/good/updateStocks")
+    @PostMapping("/backstage/good/updateStocks")
     DataRet updateStocks(@RequestBody JSONArray jsonArray);
 }
