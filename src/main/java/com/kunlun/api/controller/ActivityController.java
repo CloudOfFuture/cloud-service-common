@@ -133,4 +133,11 @@ public class ActivityController {
         List<Long> goodIdList = jsonObject.getJSONArray("goodIdList").toJavaList(Long.class);
         return activityService.unbindActivityWithGood(activityId, goodIdList);
     }
+
+    @GetMapping("/findActivityList")
+    public PageResult findByActivityType(@RequestParam(value = "pageNo") Integer pageNo,
+                              @RequestParam(value = "pageSize") Integer pageSize,
+                              @RequestParam(value = "activityType") String activityType){
+        return activityService.findByActivityType(pageNo,pageSize,activityType);
+    }
 }

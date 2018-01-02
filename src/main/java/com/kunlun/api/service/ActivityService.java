@@ -83,4 +83,13 @@ public interface ActivityService {
      * @return DataRet
      */
     DataRet unbindActivityWithGood(Long activityId, List<Long> goodIdList);
+
+    /**
+     *
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageResult findByActivityType(Integer pageNo, Integer pageSize,String activityType);
 }

@@ -275,4 +275,17 @@ public class ActivityServiceImpl implements ActivityService {
         goodClient.updateStocks(jsonArray);
     }
 
+    /**
+     *
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageResult findByActivityType(Integer pageNo, Integer pageSize,String activityType) {
+        PageHelper.startPage(pageNo,pageSize);
+        Page<ActivityGood>page=activityMapper.findByActivityType(activityType);
+        return new PageResult(page);
+    }
 }
