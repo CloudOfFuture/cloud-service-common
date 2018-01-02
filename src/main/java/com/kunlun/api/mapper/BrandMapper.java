@@ -2,6 +2,7 @@ package com.kunlun.api.mapper;
 
 import com.kunlun.entity.Brand;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author by fk
@@ -17,7 +18,7 @@ public interface BrandMapper {
      * @param brandName
      * @return
      */
-    int validByName(String brandName);
+    int validByName(@Param("brandName") String brandName);
 
     /**
      * 增加品牌
