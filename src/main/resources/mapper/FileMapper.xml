@@ -76,4 +76,13 @@
         WHERE target_id=#{targetId}
         AND type='TYPE_IMG_ID_PHOTO'
     </select>
+
+
+    <select id="list" resultType="com.kunlun.entity.MallImg">
+        SELECT
+        id,
+        url
+        FROM t_mall_img
+        WHERE target_id=#{targetId} AND type=#{type}
+    </select>
 </mapper>
