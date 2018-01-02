@@ -134,6 +134,14 @@ public class ActivityController {
         return activityService.unbindActivityWithGood(activityId, goodIdList);
     }
 
+    /**
+     * 活动列表
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param activityType
+     * @return
+     */
     @GetMapping("/findActivityList")
     public PageResult findByActivityType(@RequestParam(value = "pageNo") Integer pageNo,
                               @RequestParam(value = "pageSize") Integer pageSize,

@@ -155,6 +155,7 @@
     </update>
 
 
+    <!--活动列表-->
     <select id="findByActivityType" resultType="com.kunlun.entity.ActivityGood">
         SELECT
         act.name,

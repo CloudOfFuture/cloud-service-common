@@ -276,7 +276,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     /**
-     *
+     *活动列表
      *
      * @param pageNo
      * @param pageSize

@@ -139,8 +139,9 @@ public interface ActivityMapper {
                                @Param("goodId") Long goodId);
 
     /**
+     * 活动列表
      *
-     *
+     * @param activityType
      * @return
      */
     Page<ActivityGood> findByActivityType(@Param("activityType") String activityType);

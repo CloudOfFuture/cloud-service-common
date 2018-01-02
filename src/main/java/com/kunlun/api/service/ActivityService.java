@@ -85,7 +85,7 @@ public interface ActivityService {
     DataRet unbindActivityWithGood(Long activityId, List<Long> goodIdList);
 
     /**
-     *
+     *活动列表
      *
      * @param pageNo
      * @param pageSize
