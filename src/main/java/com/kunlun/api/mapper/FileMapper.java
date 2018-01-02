@@ -79,4 +79,14 @@ public interface FileMapper {
      * @return
      */
     List<MallImg> findIdPhotoByUserId(@Param("targetId") Long targetId);
+
+
+    /**
+     * 获取图片列表
+     *
+     * @param targetId
+     * @param type
+     * @return
+     */
+    List<MallImg> list(@Param("targetId") Long targetId,@Param("type") String type);
 }

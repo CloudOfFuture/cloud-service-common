@@ -182,14 +182,17 @@ public class ActivityServiceImpl implements ActivityService {
             return new DataRet("ERROR", "参数有误");
         }
         Activity activity = activityMapper.findById(activityId);
+        if (CommonEnum.UN_NORMAL.getCode().equals(activity.getStatus())) {
+            return new DataRet("ERROR", "活动已过期");
+        }
         if (CommonEnum.EXPIRE.getCode().equals(activity.getStatus())) {
             //已过期
-            return new DataRet("ERROR", "活动已过期，不能绑定");
+            return new DataRet("ERROR", "活动已过期");
         }
         if (activity.getEndDate().before(new Date())) {
             activity.setStatus(CommonEnum.EXPIRE.getCode());
             activityMapper.update(activity);
-            return new DataRet("ERROR", "活动已过期，不能绑定");
+            return new DataRet("ERROR", "活动已过期");
         }
         List<GoodLog> goodLogList = new ArrayList<>();
         List<Good> goods = new ArrayList<>();

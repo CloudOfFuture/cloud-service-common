@@ -108,4 +108,19 @@ public class FileController {
         return fileService.findByCondition(pageNo, pageSize, targetId, type);
     }
 
+
+    /**
+     *获取图片列表
+     *
+     * @param type
+     * @param targetId
+     * @return
+     */
+    @GetMapping("/findList")
+    public DataRet list(@RequestParam(value = "type") String type,
+                           @RequestParam(value = "targetId") Long targetId){
+        return fileService.list(targetId,type);
+    }
+
+
 }

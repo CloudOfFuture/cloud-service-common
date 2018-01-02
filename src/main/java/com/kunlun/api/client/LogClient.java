@@ -22,6 +22,6 @@ public interface LogClient {
      * @param jsonArray 日志集合
      * @return DataRet
      */
-    @PostMapping("/log/add/goodLog")
+    @PostMapping("/log/add/goodLogs")
     DataRet saveGoodLogs(@RequestBody JSONArray jsonArray);
 }

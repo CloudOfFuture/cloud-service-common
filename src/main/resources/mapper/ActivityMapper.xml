@@ -135,7 +135,7 @@
     </insert>
 
     <!--根据商品id查询商品参加的活动-->
-    <select id="findByGoodId" resultType="com.kunlun.entity.ActivityGood">
+    <select id="findActivityGoodByGoodId" resultType="com.kunlun.entity.ActivityGood">
         SELECT  id,
         activity_id,
         create_date,

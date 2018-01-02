@@ -184,6 +184,20 @@ public class FileServiceImpl implements FileService {
         return new DataRet<>("添加成功");
     }
 
+
+    /**
+     *获取图片列表
+     *
+     * @param targetId
+     * @param type
+     * @return
+     */
+    @Override
+    public DataRet list(Long targetId, String type) {
+        List<MallImg>imgList=fileMapper.list(targetId,type);
+        return new DataRet<>(imgList);
+    }
+
     /**
      * 图片裁剪
      */
