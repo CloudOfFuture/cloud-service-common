@@ -1,14 +1,16 @@
 package com.kunlun.api.controller;
 
-import com.github.pagehelper.Page;
+import com.alibaba.fastjson.JSONObject;
 import com.kunlun.api.service.BrandService;
 import com.kunlun.entity.Brand;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
-import org.apache.ibatis.annotations.Param;
-import org.hibernate.validator.constraints.Range;
+import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.kunlun.constant.Constant;
+
+import java.util.List;
 
 /**
  * @author by fk
@@ -51,7 +53,7 @@ public class BrandController {
      * @return
      */
     @GetMapping(value = "/findBrandById")
-    public DataRet findBrandById(@RequestParam(value = "id") Integer id) {
+    public DataRet findBrandById(@RequestParam(value = "id") Long id) {
         return brandService.findBrandById(id);
     }
 
@@ -68,5 +70,21 @@ public class BrandController {
                                       @RequestParam(value = "pageSize") Integer pageSize,
                                       @RequestParam(value = "searchKey") String searchKey) {
         return brandService.findByCondition(pageNo, pageSize, searchKey);
+    }
+
+    /**
+     * 批量修改品牌状态
+     *
+     * @param object 对象
+     * @return
+     */
+    @PostMapping(value = "/batchModifyStatus")
+    public DataRet batchModifyStatus(@RequestBody JSONObject object) {
+        if (!object.containsKey(Constant.STATUS) || !object.containsKey(Constant.ID_LIST)) {
+            return new DataRet("ERROR", "参数错误");
+        }
+        String status = object.getString(Constant.STATUS);
+        List<Long> idList = object.getJSONArray(Constant.ID_LIST).toJavaList(Long.class);
+        return brandService.batchModifyStatus(status, idList);
     }
 }
