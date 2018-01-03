@@ -153,4 +153,41 @@
         update_date=now()
         WHERE good_id=#{goodId}
     </update>
+
+
+    <!--活动列表-->
+    <select id="findByActivityType" resultType="com.kunlun.entity.ActivityGood">
+        SELECT
+        act.name,
+        act.activity_type,
+        act.start_date,
+        act.status,
+        act.num,
+        actg.id AS activityGoodId,
+        actg.activity_id,
+        actg.good_id,
+        actg.create_date,
+        actg.stock AS actgStock,
+        tg.good_name,
+        tg.description,
+        tg.promotion,
+        tg.sale_volume,
+        actg.stock,
+        tg.stock AS tgStock,
+        tg.hot,
+        tg.is_new,
+        tg.freight,
+        tg.freight_fee,
+        tg.brand_id,
+        tg.seller_id,
+        tg.visit_total,
+        tg.good_no,
+        tg.main_image_url,
+        tg.status,
+        tg.rich_content
+        FROM t_activity act LEFT JOIN t_activity_good actg ON act.id = actg.activity_id
+        INNER JOIN t_good tg ON actg.good_id = tg.id
+        AND act.activity_type =#{activityType} AND actg.status='NORMAL' AND act.status='NORMAL'AND end_date>NOW()
+        AND NOW()>start_date
+    </select>
 </mapper>

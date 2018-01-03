@@ -138,4 +138,11 @@ public interface ActivityMapper {
     int unbindActivityWithGood(@Param("activityId") Long activityId,
                                @Param("goodId") Long goodId);
 
+    /**
+     * 活动列表
+     *
+     * @param activityType
+     * @return
+     */
+    Page<ActivityGood> findByActivityType(@Param("activityType") String activityType);
 }
