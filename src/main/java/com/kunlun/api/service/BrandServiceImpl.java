@@ -12,7 +12,9 @@ import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.management.LockInfo;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author by fk
@@ -82,7 +84,7 @@ public class BrandServiceImpl implements BrandService {
      * @return
      */
     @Override
-    public DataRet findBrandById(Integer id) {
+    public DataRet findBrandById(Long id) {
         if (id == null) {
             return new DataRet("ERROR", "品牌id不存在");
         }
@@ -119,4 +121,22 @@ public class BrandServiceImpl implements BrandService {
         }
         return new PageResult(page);
     }
+
+    /**
+     * 批量修改品牌状态
+     *
+     * @param status 0退出 1入驻 2删除 ENTER 入驻 QUIT退出
+     * @param idList id集合
+     * @return
+     */
+    @Override
+    public DataRet batchModifyStatus(String status, List<Long> idList) {
+        if (idList == null || idList.size() == 0 || StringUtils.isNullOrEmpty(status)) {
+            return new DataRet("ERROR", "参数错误");
+        }
+        brandMapper.batchModifyStatus(status, idList);
+        return new DataRet("修改成功");
+    }
+
+
 }

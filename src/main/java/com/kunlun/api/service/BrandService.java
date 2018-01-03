@@ -4,6 +4,8 @@ import com.kunlun.entity.Brand;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
 
+import java.util.List;
+
 /**
  * @author by fk
  * @version <0.1>
@@ -33,7 +35,7 @@ public interface BrandService {
      * @param id
      * @return
      */
-    DataRet findBrandById(Integer id);
+    DataRet findBrandById(Long id);
 
     /**
      * 分页查询品牌详情/模糊查询
@@ -44,4 +46,13 @@ public interface BrandService {
      * @return
      */
     PageResult findByCondition(Integer pageNo, Integer pageSize, String searchKey);
+
+    /**
+     * 批量修改品牌状态
+     *
+     * @param status
+     * @param idList
+     * @return
+     */
+    DataRet batchModifyStatus(String status, List<Long> idList);
 }
