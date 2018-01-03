@@ -55,4 +55,5 @@ public interface BrandService {
      * @return
      */
     DataRet batchModifyStatus(String status, List<Long> idList);
+
 }
