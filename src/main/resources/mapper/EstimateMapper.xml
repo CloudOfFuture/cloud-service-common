@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunlun.api.mapper.EstimateMapper">
+    <insert id="estimate" parameterType="com.kunlun.entity.Estimate">
+        INSERT INTO t_estimate(
+        good_id,
+        message,
+        user_id,
+        create_date,
+        update_date,
+        complain,
+        nick_name
+        ) VALUES (
+        #{goodId},
+        #{message},
+        #{userId},
+        NOW(),
+        NOW(),
+        #{complain},
+        #{nickName}
+        )
+    </insert>
+
+</mapper>

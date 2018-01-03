@@ -12,7 +12,6 @@ import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.management.LockInfo;
 import java.util.ArrayList;
 import java.util.List;
 
