@@ -7,7 +7,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.kunlun.api.mapper.FileMapper;
 import com.kunlun.constant.Constant;
-import com.kunlun.entity.MallImage;
 import com.kunlun.entity.MallImageSize;
 import com.kunlun.entity.MallImg;
 import com.kunlun.enums.CommonEnum;
@@ -70,9 +69,9 @@ public class FileServiceImpl implements FileService {
         File image = new File(path + fileName + endName);
         file.transferTo(image);
 
-        List<MallImage> urlList = new ArrayList<>();
+        List<MallImg> urlList = new ArrayList<>();
         String imageUrl = getFileName(path, fileName, endName, null);
-        urlList.add(new MallImage(imageUrl));
+        urlList.add(new MallImg(imageUrl));
         if (Constant.RICH_TEXT_IMG_PATH.equals(path)) {
             //富文本图片记录 url入库
             fileMapper.add(new MallImg(imageUrl, CommonEnum.TYPE_IMG_RICH_CONTENT.getCode()));
@@ -84,7 +83,7 @@ public class FileServiceImpl implements FileService {
             //加水印
             String absolutePath = getAbsolutePath(path, fileName, endName, null);
             waterRemark(null, absolutePath);
-            urlList.add(new MallImage(getFileName(path, fileName, endName, null)));
+            urlList.add(new MallImg(getFileName(path, fileName, endName, null)));
         }
         return new DataRet<>(urlList);
     }
@@ -187,7 +186,7 @@ public class FileServiceImpl implements FileService {
 
 
     /**
-     *获取图片列表
+     * 获取图片列表
      *
      * @param targetId
      * @param type
@@ -195,21 +194,23 @@ public class FileServiceImpl implements FileService {
      */
     @Override
     public DataRet list(Long targetId, String type) {
-        List<MallImg>imgList=fileMapper.list(targetId,type);
+        List<MallImg> imgList = fileMapper.list(targetId, type);
         return new DataRet<>(imgList);
     }
 
     /**
      * 图片裁剪
      */
-    private void cutImage(String watermark, List<MallImageSize> cutSizeList, String path, String fileName, String endName, File image, List<MallImage> urlList) throws IOException {
+    private void cutImage(String watermark, List<MallImageSize> cutSizeList,
+                          String path, String fileName, String endName,
+                          File image, List<MallImg> urlList) throws IOException {
         for (MallImageSize imageCutSize : cutSizeList) {
             String absolutePath = getAbsolutePath(path, fileName, endName, imageCutSize);
             cutImage(image, imageCutSize, absolutePath);
             if (CommonEnum.WATER_REMARK.getCode().equals(watermark)) {
                 waterRemark(imageCutSize, absolutePath);
             }
-            urlList.add(new MallImage(getFileName(path, fileName, endName, imageCutSize)));
+            urlList.add(new MallImg(getFileName(path, fileName, endName, imageCutSize)));
         }
     }
 
