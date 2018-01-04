@@ -1,9 +1,15 @@
 package com.kunlun.api.controller;
 
 import com.kunlun.api.service.TicketService;
+import com.kunlun.entity.Ticket;
 import com.kunlun.result.DataRet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author by hws
@@ -13,31 +19,46 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("ticket")
 public class TicketController {
 
+
     @Autowired
     private TicketService ticketService;
 
-
     /**
      * 查看优惠券是否可正常使用
+     *
      * @param useTicket
      * @param ticketId
      * @return
      */
     @GetMapping("checkTicket")
     public DataRet<String> checkTicket(@RequestParam(value = "useTicket") String useTicket,
-                              @RequestParam(value = "ticketId") Long ticketId){
-        return ticketService.checkTicket(useTicket,ticketId);
+                                       @RequestParam(value = "ticketId") Long ticketId) {
+        return ticketService.checkTicket(useTicket, ticketId);
     }
 
     /**
      * 修改用户优惠券状态
+     *
      * @param ticketId
      * @param status
      * @return
      */
     @PostMapping("modifyStatus")
     public DataRet<String> modifyStatus(@RequestParam(value = "ticketId") Long ticketId,
-                                @RequestParam(value = "status") String status){
-        return ticketService.modifyUserTicketStatus(ticketId,status);
+                                        @RequestParam(value = "status") String status) {
+        return ticketService.modifyUserTicketStatus(ticketId, status);
     }
+
+    /**
+     * 创建优惠券
+     *
+     * @param ticket 优惠券
+     * @return
+     */
+    @PostMapping(value = "/add")
+    public DataRet add(@RequestBody Ticket ticket) {
+        return ticketService.add(ticket);
+    }
+
+
 }
