@@ -158,4 +158,14 @@ public interface ActivityMapper {
     Integer validByActivityAndGoodIdAndUserId(@Param("goodId") Long goodId,
                                               @Param("activityId") Long activityId,
                                               @Param("userId") String userId);
+
+    /**
+     * 获取活动商品信息
+     *
+     * @param activityId
+     * @param goodId
+     * @return
+     */
+    ActivityGood findByActivityIdAndGoodId(@Param("activityId") Long activityId,
+                                           @Param("goodId") Long goodId);
 }

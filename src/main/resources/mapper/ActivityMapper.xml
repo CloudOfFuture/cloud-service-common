@@ -195,4 +195,16 @@
     <select id="validByActivityIdAndGoodIdAndUserId" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM t_user_activity WHERE user_id=#{userId} AND activity_id=#{activityId} AND good_id=#{goodId}
     </select>
+
+    <!-- 查询活动商品详情 -->
+    <select id="findByActivityIdAndGoodId" resultType="com.kunlun.entity.ActivityGood">
+        SELECT
+        id,
+        activity_id,
+        good_id,
+        create_date,
+        stock,
+        update_date
+        FROM t_activity_good WHERE good_id=#{goodId} AND activity_id=#{activityId}
+    </select>
 </mapper>

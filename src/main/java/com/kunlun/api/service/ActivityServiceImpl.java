@@ -305,14 +305,37 @@ public class ActivityServiceImpl implements ActivityService {
         if (result > 0) {
             return new DataRet<>("ERROR", "不能重复参加活动");
         }
-        Date currentDate=new Date();
-        Activity activity=activityMapper.findById(activityId);
-        if (currentDate.after(activity.getEndDate())){
-            return new DataRet<>("ERROR","活动已过期");
+        Date currentDate = new Date();
+        Activity activity = activityMapper.findById(activityId);
+        if (currentDate.after(activity.getEndDate())) {
+            return new DataRet<>("ERROR", "活动已过期");
         }
-        if (currentDate.before(activity.getStartDate())){
-            return new DataRet<>("ERROR","活动未开始");
+        if (currentDate.before(activity.getStartDate())) {
+            return new DataRet<>("ERROR", "活动未开始");
         }
         return new DataRet<>("可参加活动");
+    }
+
+
+    /**
+     * 校验活动商品
+     *
+     * @param activityId
+     * @param goodId
+     * @return
+     */
+    @Override
+    public DataRet<String> checkActivityGood(Long activityId, Long goodId) {
+        ActivityGood activityGood = activityMapper.findByActivityIdAndGoodId(activityId, goodId);
+        if (activityGood.getStock() <= 0 || null == activityGood) {
+            return new DataRet<>("ERROR", "库存不足");
+        }
+        if (CommonEnum.UN_NORMAL.getCode().equals(activityGood.getStatus())) {
+            return new DataRet<>("ERROR", "活动商品信息已过期,请重新下单");
+        }
+        if (CommonEnum.OFF_SALE.getCode().equals(activityGood.getOnSale())) {
+            return new DataRet<>("ERROR","活动商品下架,请重新下单");
+        }
+        return new DataRet<>("商品信息合格");
     }
 }

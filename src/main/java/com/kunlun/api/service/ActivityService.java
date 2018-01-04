@@ -103,4 +103,14 @@ public interface ActivityService {
      * @return
      */
     DataRet<String> checkActivity(Long goodId, Long activityId, String userId);
+
+
+    /**
+     * 校验活动商品
+     *
+     * @param activityId
+     * @param goodId
+     * @return
+     */
+    DataRet<String> checkActivityGood(Long activityId, Long goodId);
 }
