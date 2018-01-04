@@ -63,4 +63,5 @@ public interface BrandMapper {
      * @param status 状态 0退出 1入驻 2删除 ENTER 入驻 QUIT 退出
      */
     void batchModifyStatus(@Param("status") String status, @Param("idList") List<Long> idList);
+
 }
