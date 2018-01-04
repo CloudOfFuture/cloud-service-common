@@ -61,4 +61,26 @@
         #{reduceMoney}
         )
     </insert>
+
+    <!--模糊查询优惠券（带分页）-->
+    <select id="findByCondition" resultType="com.kunlun.entity.Ticket">
+        SELECT seller_id,
+        ticket_name,
+        content,
+        start_date,
+        end_date,
+        money,
+        num,
+        status,
+        create_date,
+        ticket_no,
+        type,
+        update_date,
+        num_limit,
+        use_range,
+        use_date,
+        reduce_money
+        FROM t_ticket WHERE 1=1
+        <if test="searchKey!=null">AND CONCAT_WS('',ticket_name,content) LIKE #{searchKey}</if>
+    </select>
 </mapper>

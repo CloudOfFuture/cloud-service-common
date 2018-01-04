@@ -1,5 +1,6 @@
 package com.kunlun.api.mapper;
 
+import com.github.pagehelper.Page;
 import com.kunlun.entity.Ticket;
 import com.kunlun.entity.TicketSnapshot;
 import com.kunlun.entity.TicketUser;
@@ -52,4 +53,12 @@ public interface TicketMapper {
      * @return
      */
     int add(Ticket ticket);
+
+    /**
+     * 模糊查询优惠券（带分页）
+     *
+     * @param searchKey
+     * @return
+     */
+    Page<Ticket> findByCondition(@Param("searchKey") String searchKey);
 }

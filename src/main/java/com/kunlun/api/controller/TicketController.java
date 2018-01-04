@@ -3,6 +3,7 @@ package com.kunlun.api.controller;
 import com.kunlun.api.service.TicketService;
 import com.kunlun.entity.Ticket;
 import com.kunlun.result.DataRet;
+import com.kunlun.result.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
@@ -60,5 +61,19 @@ public class TicketController {
         return ticketService.add(ticket);
     }
 
+    /**
+     * 模糊查询优惠券（带分页）
+     *
+     * @param pageNo    页码
+     * @param pageSize  数量
+     * @param searchKey 关键字
+     * @return
+     */
+    @GetMapping(value = "/findByCondition")
+    public PageResult findByCondition(@RequestParam(value = "pageNo") Integer pageNo,
+                                      @RequestParam(value = "pageSize") Integer pageSize,
+                                      @RequestParam(value = "searchKey", required = false) String searchKey) {
+        return ticketService.findByCondition(pageNo, pageSize, searchKey);
+    }
 
 }

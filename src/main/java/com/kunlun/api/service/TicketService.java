@@ -2,6 +2,7 @@ package com.kunlun.api.service;
 
 import com.kunlun.entity.Ticket;
 import com.kunlun.result.DataRet;
+import com.kunlun.result.PageResult;
 
 /**
  * @author by hws
@@ -34,4 +35,14 @@ public interface TicketService {
      * @return
      */
     DataRet add(Ticket ticket);
+
+    /**
+     * 模糊查询优惠券（带分页)
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param searchKey
+     * @return
+     */
+    PageResult findByCondition(Integer pageNo, Integer pageSize, String searchKey);
 }
