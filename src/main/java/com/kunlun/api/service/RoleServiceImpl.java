@@ -147,7 +147,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public DataRet<String> getMenu(Long roleId, List<Long> menuIdList) {
+    public DataRet<String> menuBindRole(Long roleId, List<Long> menuIdList) {
         if (roleId == null || menuIdList == null || menuIdList.size() == 0) {
             return new DataRet<>("ERROR", "参数错误");
         }
@@ -175,21 +175,33 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public DataRet<String> getUser(Long roleId, Long userId) {
+    public DataRet<String> userBindRole(Long roleId, Long userId) {
         if (roleId == null || userId == null) {
             return new DataRet<>("ERROR", "参数错误");
         }
         Integer validResult = roleMapper.validUserId(userId);
         if (validResult > 0) {
-            Integer updateResult=roleMapper.updateRoleId(roleId,userId);
-            if (updateResult>0){
+            Integer updateResult = roleMapper.updateRoleId(roleId, userId);
+            if (updateResult > 0) {
                 return new DataRet<>("分配成功");
             }
         }
-        Integer result=roleMapper.addRoleIdAndUserId(roleId,userId);
-        if (result>0){
+        Integer result = roleMapper.addRoleIdAndUserId(roleId, userId);
+        if (result > 0) {
             return new DataRet<>("分配成功");
         }
-        return new DataRet<>("ERROR","分配失败");
+        return new DataRet<>("ERROR", "分配失败");
+    }
+
+    /**
+     * 查询卖家角色
+     */
+    @Override
+    public DataRet<SysRole> findSellerRole() {
+        SysRole sellerRole = roleMapper.findSellerRole();
+        if (sellerRole == null) {
+            return new DataRet<>("not_found", "查无结果");
+        }
+        return new DataRet<>(sellerRole);
     }
 }

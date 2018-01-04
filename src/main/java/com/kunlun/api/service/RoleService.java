@@ -65,7 +65,7 @@ public interface RoleService {
      * @param menuIdList
      * @return
      */
-    DataRet<String> getMenu(Long roleId, List<Long> menuIdList);
+    DataRet<String> menuBindRole(Long roleId, List<Long> menuIdList);
 
 
     /**
@@ -75,5 +75,12 @@ public interface RoleService {
      * @param userId
      * @return
      */
-    DataRet<String> getUser(Long roleId, Long userId);
+    DataRet<String> userBindRole(Long roleId, Long userId);
+
+    /**
+     * 查询卖家角色
+     *
+     * @return  DataRet
+     */
+    DataRet<SysRole> findSellerRole();
 }

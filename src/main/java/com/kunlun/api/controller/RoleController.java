@@ -31,7 +31,7 @@ public class RoleController {
      * @return
      */
     @PostMapping("/add")
-    public DataRet<String> addRole(@RequestBody SysRole sysRole){
+    public DataRet<String> addRole(@RequestBody SysRole sysRole) {
         return roleService.add(sysRole);
     }
 
@@ -43,7 +43,7 @@ public class RoleController {
      * @return
      */
     @PostMapping("/update")
-    public DataRet<String> update(@RequestBody SysRole sysRole){
+    public DataRet<String> update(@RequestBody SysRole sysRole) {
         return roleService.update(sysRole);
     }
 
@@ -55,7 +55,7 @@ public class RoleController {
      * @return
      */
     @PostMapping("/deleteById")
-    public DataRet<String> deleteById(@RequestParam(value = "id") Long id){
+    public DataRet<String> deleteById(@RequestParam(value = "id") Long id) {
         return roleService.deleteById(id);
     }
 
@@ -67,7 +67,7 @@ public class RoleController {
      * @return
      */
     @GetMapping("/findById")
-    public DataRet<SysRole> findById(@RequestParam(value = "id") Long id){
+    public DataRet<SysRole> findById(@RequestParam(value = "id") Long id) {
         return roleService.findById(id);
     }
 
@@ -83,8 +83,8 @@ public class RoleController {
     @GetMapping("/findByCondition")
     public PageResult findByCondition(@RequestParam(value = "pageNo") Integer pageNo,
                                       @RequestParam(value = "pageSize") Integer pageSize,
-                                      @RequestParam(value = "searchKey",required = false) String searchKey){
-        return roleService.findByCondition(pageNo,pageSize,searchKey);
+                                      @RequestParam(value = "searchKey", required = false) String searchKey) {
+        return roleService.findByCondition(pageNo, pageSize, searchKey);
     }
 
 
@@ -95,10 +95,10 @@ public class RoleController {
      * @return
      */
     @PostMapping("/distribution/menu")
-    public DataRet<String> getMenu(@RequestBody JSONObject object){
-        Long roleId=object.getObject("roleId",Long.class);
-        List<Long>menuIdList=object.getJSONArray("menuIdList").toJavaList(Long.class);
-        return roleService.getMenu(roleId,menuIdList);
+    public DataRet<String> menuBindRole(@RequestBody JSONObject object) {
+        Long roleId = object.getObject("roleId", Long.class);
+        List<Long> menuIdList = object.getJSONArray("menuIdList").toJavaList(Long.class);
+        return roleService.menuBindRole(roleId, menuIdList);
     }
 
 
@@ -110,8 +110,18 @@ public class RoleController {
      * @return
      */
     @PostMapping("/distribution/user")
-    public DataRet<String>getUser(@RequestParam(value = "roleId") Long roleId,
-                                  @RequestParam(value = "userId") Long userId){
-        return roleService.getUser(roleId,userId);
+    public DataRet<String> userBindRole(@RequestParam(value = "roleId") Long roleId,
+                                        @RequestParam(value = "userId") Long userId) {
+        return roleService.userBindRole(roleId, userId);
+    }
+
+    /**
+     * 查询卖家角色
+     *
+     * @return DataRet
+     */
+    @GetMapping("/distribution/findSellerRole")
+    public DataRet<SysRole> findSellerRole() {
+        return roleService.findSellerRole();
     }
 }
