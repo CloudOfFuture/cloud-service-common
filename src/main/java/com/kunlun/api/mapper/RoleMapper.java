@@ -30,14 +30,13 @@ public interface RoleMapper {
     Integer add(SysRole sysRole);
 
 
-
     /**
      * 根据id校验名称
      *
      * @param name
      * @return
      */
-    Integer validByNameAndId(@Param("name") String name,@Param("id") Long id);
+    Integer validByNameAndId(@Param("name") String name, @Param("id") Long id);
 
     /**
      * 校验角色是否与用户绑定
@@ -93,7 +92,6 @@ public interface RoleMapper {
 
 
     /**
-     *
      * @param menuId
      * @return
      */
@@ -101,32 +99,26 @@ public interface RoleMapper {
 
 
     /**
-     *
-     *
      * @param roleId
      * @param parentId
      * @return
      */
-    Integer queryExistByPid(@Param("roleId") Long roleId,@Param("parentId") Long parentId);
+    Integer queryExistByPid(@Param("roleId") Long roleId, @Param("parentId") Long parentId);
 
     /**
-     *
-     *
      * @param roleId
      * @param menuId
      * @return
      */
-    Integer addRoleMenuRelation(@Param("roleId") Long roleId,@Param("menuId") Long menuId);
+    Integer addRoleMenuRelation(@Param("roleId") Long roleId, @Param("menuId") Long menuId);
 
 
     /**
-     *
-     *
      * @param roleId
      * @param parentId
      * @return
      */
-    Integer insertPid(@Param("roleId") Long roleId,@Param("parentId") Long parentId);
+    Integer insertPid(@Param("roleId") Long roleId, @Param("parentId") Long parentId);
 
     /**
      * 校验用户是否已经绑定角色
@@ -144,7 +136,7 @@ public interface RoleMapper {
      * @param userId
      * @return
      */
-    Integer updateRoleId(@Param("roleId") Long roleId,@Param("userId") Long userId);
+    Integer updateRoleId(@Param("roleId") Long roleId, @Param("userId") Long userId);
 
 
     /**
@@ -154,5 +146,12 @@ public interface RoleMapper {
      * @param userId
      * @return
      */
-    Integer addRoleIdAndUserId(@Param("roleId") Long roleId,@Param("userId") Long userId);
+    Integer addRoleIdAndUserId(@Param("roleId") Long roleId, @Param("userId") Long userId);
+
+    /**
+     * 查询卖家角色
+     *
+     * @return SysRole
+     */
+    SysRole findSellerRole();
 }

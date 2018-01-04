@@ -17,4 +17,70 @@
     <update id="modifyUserTicketStatus">
         UPDATE t_ticket_user SET status = #{status} WHERE id= #{ticketId}
     </update>
+
+    <!--判断优惠券名字是否存在-->
+    <select id="validByTicketName" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_ticket WHERE ticket_name=#{ticketName} AND status='NORMAL'
+    </select>
+
+    <!--新增优惠券-->
+    <insert id="add" parameterType="com.kunlun.entity.Ticket">
+        INSERT INTO t_ticket(
+        seller_id,
+        ticket_name,
+        content,
+        start_date,
+        end_date,
+        money,
+        num,
+        status,
+        create_date,
+        ticket_no,
+        type,
+        update_date,
+        num_limit,
+        use_range,
+        use_date,
+        reduce_money
+        ) VALUES (
+        #{sellerId},
+        #{ticketName},
+        #{content},
+        #{startDate},
+        #{endDate},
+        #{money},
+        #{num},
+        #{status},
+        NOW(),
+        #{ticketNo},
+        #{type},
+        NOW(),
+        #{numLimit},
+        #{useRange},
+        #{useDate},
+        #{reduceMoney}
+        )
+    </insert>
+
+    <!--模糊查询优惠券（带分页）-->
+    <select id="findByCondition" resultType="com.kunlun.entity.Ticket">
+        SELECT seller_id,
+        ticket_name,
+        content,
+        start_date,
+        end_date,
+        money,
+        num,
+        status,
+        create_date,
+        ticket_no,
+        type,
+        update_date,
+        num_limit,
+        use_range,
+        use_date,
+        reduce_money
+        FROM t_ticket WHERE 1=1
+        <if test="searchKey!=null">AND CONCAT_WS('',ticket_name,content) LIKE #{searchKey}</if>
+    </select>
 </mapper>

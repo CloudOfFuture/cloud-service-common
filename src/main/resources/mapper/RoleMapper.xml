@@ -135,4 +135,11 @@
         #{userId},
         #{roleId})
     </insert>
+
+    <select id="findSellerRole" resultType="com.kunlun.entity.SysRole">
+        SELECT id,
+        name
+        FROM t_sys_role
+        WHERE role_level='LEVEL_ORDINARY' AND ststus='NORMAL'
+    </select>
 </mapper>
