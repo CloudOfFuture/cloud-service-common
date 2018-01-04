@@ -165,13 +165,11 @@ public class ActivityController {
     /**
      * 校验活动商品
      *
-     * @param activityId
      * @param goodId
      * @return
      */
     @GetMapping("/checkActivityGood")
-    public DataRet<String>checkActivityGood(@RequestParam(value = "activityId") Long activityId,
-                                            @RequestParam(value = "goodId") Long goodId){
-        return activityService.checkActivityGood(activityId,goodId);
+    public DataRet<String>checkActivityGood(@RequestParam(value = "goodId") Long goodId){
+        return activityService.checkActivityGood(goodId);
     }
 }

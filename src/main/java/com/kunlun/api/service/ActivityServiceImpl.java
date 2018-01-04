@@ -320,13 +320,12 @@ public class ActivityServiceImpl implements ActivityService {
     /**
      * 校验活动商品
      *
-     * @param activityId
      * @param goodId
      * @return
      */
     @Override
-    public DataRet<String> checkActivityGood(Long activityId, Long goodId) {
-        ActivityGood activityGood = activityMapper.findByActivityIdAndGoodId(activityId, goodId);
+    public DataRet<String> checkActivityGood( Long goodId) {
+        ActivityGood activityGood = activityMapper.findByActivityIdAndGoodId(goodId);
         if (activityGood.getStock() <= 0 || null == activityGood) {
             return new DataRet<>("ERROR", "库存不足");
         }

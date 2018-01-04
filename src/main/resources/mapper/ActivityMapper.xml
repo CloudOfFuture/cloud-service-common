@@ -205,6 +205,6 @@
         create_date,
         stock,
         update_date
-        FROM t_activity_good WHERE good_id=#{goodId} AND activity_id=#{activityId}
+        FROM t_activity_good WHERE good_id=#{goodId}
     </select>
 </mapper>
