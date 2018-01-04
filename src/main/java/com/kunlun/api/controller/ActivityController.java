@@ -148,4 +148,16 @@ public class ActivityController {
                               @RequestParam(value = "activityType") String activityType){
         return activityService.findByActivityType(pageNo,pageSize,activityType);
     }
+
+    /**
+     * 活动校验
+     *
+     * @return
+     */
+    @GetMapping("/checkActivity")
+    public DataRet<String> checkActivity(@RequestParam(value = "goodId") Long goodId,
+                                         @RequestParam(value = "activityId") Long activityId,
+                                         @RequestParam(value = "userId") String userId){
+        return activityService.checkActivity(goodId,activityId,userId);
+    }
 }

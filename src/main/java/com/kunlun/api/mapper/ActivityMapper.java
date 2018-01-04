@@ -145,4 +145,17 @@ public interface ActivityMapper {
      * @return
      */
     Page<ActivityGood> findByActivityType(@Param("activityType") String activityType);
+
+
+    /**
+     * 校验是否参加过活动
+     *
+     * @param goodId
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    Integer validByActivityAndGoodIdAndUserId(@Param("goodId") Long goodId,
+                                              @Param("activityId") Long activityId,
+                                              @Param("userId") String userId);
 }

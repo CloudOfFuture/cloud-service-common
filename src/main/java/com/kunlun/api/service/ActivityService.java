@@ -92,4 +92,15 @@ public interface ActivityService {
      * @return
      */
     PageResult findByActivityType(Integer pageNo, Integer pageSize,String activityType);
+
+
+    /**
+     * 活动校验
+     *
+     * @param goodId
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    DataRet<String> checkActivity(Long goodId, Long activityId, String userId);
 }

@@ -276,16 +276,43 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     /**
-     *活动列表
+     * 活动列表
      *
      * @param pageNo
      * @param pageSize
      * @return
      */
     @Override
-    public PageResult findByActivityType(Integer pageNo, Integer pageSize,String activityType) {
-        PageHelper.startPage(pageNo,pageSize);
-        Page<ActivityGood>page=activityMapper.findByActivityType(activityType);
+    public PageResult findByActivityType(Integer pageNo, Integer pageSize, String activityType) {
+        PageHelper.startPage(pageNo, pageSize);
+        Page<ActivityGood> page = activityMapper.findByActivityType(activityType);
         return new PageResult(page);
+    }
+
+
+    /**
+     * 校验活动
+     *
+     * @param goodId
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    @Override
+    public DataRet<String> checkActivity(Long goodId, Long activityId, String userId) {
+        //是否参加过活动
+        Integer result = activityMapper.validByActivityAndGoodIdAndUserId(goodId, activityId, userId);
+        if (result > 0) {
+            return new DataRet<>("ERROR", "不能重复参加活动");
+        }
+        Date currentDate=new Date();
+        Activity activity=activityMapper.findById(activityId);
+        if (currentDate.after(activity.getEndDate())){
+            return new DataRet<>("ERROR","活动已过期");
+        }
+        if (currentDate.before(activity.getStartDate())){
+            return new DataRet<>("ERROR","活动未开始");
+        }
+        return new DataRet<>("可参加活动");
     }
 }
