@@ -71,4 +71,12 @@ public interface TicketService {
      * @return
      */
     DataRet batchDeleteById(List<Long> list);
+
+    /**
+     * 根据主键查询优惠券详情
+     *
+     * @param id
+     * @return
+     */
+    DataRet findById(Long id);
 }

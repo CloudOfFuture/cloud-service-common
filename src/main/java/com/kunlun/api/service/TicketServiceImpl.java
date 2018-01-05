@@ -195,4 +195,26 @@ public class TicketServiceImpl implements TicketService {
         }
         return new DataRet("ERROR", "批量删除优惠失败");
     }
+
+    /**
+     * 根据主键查询优惠券详情
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public DataRet findById(Long id) {
+        if (id == null) {
+            return new DataRet("ERROR", "参数错误，id不存在");
+        }
+        Ticket ticket = ticketMapper.findById(id);
+        if (ticket == null) {
+            return new DataRet("ERROR", "优惠券没找到");
+        }
+        if (ticket.getEndDate().before(new Date())) {
+            ticket.setStatus(CommonEnum.EXPIRE.getCode());
+            ticketMapper.modifyByTicket(ticket);
+        }
+        return new DataRet(ticket);
+    }
 }

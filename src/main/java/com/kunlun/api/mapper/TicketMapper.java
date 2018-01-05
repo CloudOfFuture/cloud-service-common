@@ -97,4 +97,12 @@ public interface TicketMapper {
      * @return
      */
     Integer batchDeleteById(@Param("list") List<Long> list);
+
+    /**
+     * 根据主键查询优惠券详情
+     *
+     * @param id
+     * @return
+     */
+    Ticket findById(@Param("id") Long id);
 }
