@@ -45,4 +45,12 @@ public interface TicketService {
      * @return
      */
     PageResult findByCondition(Integer pageNo, Integer pageSize, String searchKey);
+
+    /**
+     * 修改优惠券
+     *
+     * @param ticket
+     * @return
+     */
+    DataRet modifyByTicket(Ticket ticket);
 }

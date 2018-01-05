@@ -83,4 +83,26 @@
         FROM t_ticket WHERE 1=1
         <if test="searchKey!=null">AND CONCAT_WS('',ticket_name,content) LIKE #{searchKey}</if>
     </select>
+
+    <!--校验优惠券名字-->
+    <select id="validTicketByNameAndId" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM t_ticket
+        WHERE ticket_name=#{ticketName} AND id!=#{id} AND status='NORMAL'
+    </select>
+
+    <!--修改优惠券-->
+    <update id="modifyByTicket" parameterType="com.kunlun.entity.Ticket">
+        UPDATE t_ticket SET
+        <if test="ticketName!=null">ticket_name=#{ticketName},</if>
+        <if test="content!=null">content=#{content},</if>
+        <if test="startDate!=null">start_date=#{startDate},</if>
+        <if test="endDate!=null">end_date=#{endDate},</if>
+        <if test="money!=null">money=#{money},</if>
+        <if test="num!=null">num=#{num},</if>
+        <if test="useDate!=null">use_date=#{useDate},</if>
+        <if test="reduceMoney!=null">reduce_money=#{reduceMoney},</if>
+        update_date=NOW()
+        WHERE id=#{id}
+    </update>
 </mapper>

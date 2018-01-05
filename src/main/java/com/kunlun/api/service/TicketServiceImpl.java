@@ -13,6 +13,7 @@ import com.kunlun.result.PageResult;
 import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.logging.Logger;
@@ -131,5 +132,30 @@ public class TicketServiceImpl implements TicketService {
             }
         });
         return new PageResult(page);
+    }
+
+    /**
+     * 修改优惠券
+     *
+     * @param ticket
+     * @return
+     */
+    @Override
+    public DataRet modifyByTicket(Ticket ticket) {
+        if (ticket.getId() == null) {
+            return new DataRet("ERROR", "未拿到优惠券id");
+        }
+        Integer validTicketByNameAndId = ticketMapper.validTicketByNameAndId(ticket.getId(), ticket.getTicketName());
+        if (!validTicketByNameAndId.equals(0)) {
+            return new DataRet("ERROR", "优惠券名字已存在");
+        }
+        Integer result = ticketMapper.modifyByTicket(ticket);
+        if (result < 0) {
+            return new DataRet("ERROR", "修改优惠券失败");
+        }
+//        if (ticket.getNum() <= 0) {
+//            return new DataRet("EORRR", "修改出错，优惠券数量不能为0");
+//        }
+        return new DataRet("修改优惠券成功");
     }
 }

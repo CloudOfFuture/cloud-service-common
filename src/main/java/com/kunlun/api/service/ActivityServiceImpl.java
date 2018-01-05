@@ -276,16 +276,65 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     /**
-     *活动列表
+     * 活动列表
      *
      * @param pageNo
      * @param pageSize
      * @return
      */
     @Override
-    public PageResult findByActivityType(Integer pageNo, Integer pageSize,String activityType) {
-        PageHelper.startPage(pageNo,pageSize);
-        Page<ActivityGood>page=activityMapper.findByActivityType(activityType);
+    public PageResult findByActivityType(Integer pageNo, Integer pageSize, String activityType) {
+        PageHelper.startPage(pageNo, pageSize);
+        Page<ActivityGood> page = activityMapper.findByActivityType(activityType);
         return new PageResult(page);
+    }
+
+
+    /**
+     * 校验活动
+     *
+     * @param goodId
+     * @param activityId
+     * @param userId
+     * @return
+     */
+    @Override
+    public DataRet<String> checkActivity(Long goodId, Long activityId, String userId) {
+        //是否参加过活动
+        Integer result = activityMapper.validByActivityAndGoodIdAndUserId(goodId, activityId, userId);
+        if (result > 0) {
+            return new DataRet<>("ERROR", "不能重复参加活动");
+        }
+        Date currentDate = new Date();
+        Activity activity = activityMapper.findById(activityId);
+        if (currentDate.after(activity.getEndDate())) {
+            return new DataRet<>("ERROR", "活动已过期");
+        }
+        if (currentDate.before(activity.getStartDate())) {
+            return new DataRet<>("ERROR", "活动未开始");
+        }
+        return new DataRet<>("可参加活动");
+    }
+
+
+    /**
+     * 校验活动商品
+     *
+     * @param goodId
+     * @return
+     */
+    @Override
+    public DataRet<String> checkActivityGood( Long goodId) {
+        ActivityGood activityGood = activityMapper.findByActivityIdAndGoodId(goodId);
+        if (activityGood.getStock() <= 0 || null == activityGood) {
+            return new DataRet<>("ERROR", "库存不足");
+        }
+        if (CommonEnum.UN_NORMAL.getCode().equals(activityGood.getStatus())) {
+            return new DataRet<>("ERROR", "活动商品信息已过期,请重新下单");
+        }
+        if (CommonEnum.OFF_SALE.getCode().equals(activityGood.getOnSale())) {
+            return new DataRet<>("ERROR","活动商品下架,请重新下单");
+        }
+        return new DataRet<>("商品信息合格");
     }
 }
