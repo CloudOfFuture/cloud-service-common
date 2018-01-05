@@ -108,10 +108,21 @@ public class TicketController {
      * @param jsonObject 数组对象
      * @return
      */
-    @PostMapping(value = "batchDeleteById")
+    @PostMapping(value = "/batchDeleteById")
     public DataRet batchDeleteById(@RequestBody JSONObject jsonObject) {
         List<Long> list = jsonObject.getJSONArray("list").toJavaList(Long.class);
         return ticketService.batchDeleteById(list);
+    }
+
+    /**
+     * 根据主键id查询优惠券详情
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/findById")
+    public DataRet findById(@RequestParam(value = "id") Long id) {
+        return ticketService.findById(id);
     }
 
 }

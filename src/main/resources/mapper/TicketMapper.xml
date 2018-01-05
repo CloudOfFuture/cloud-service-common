@@ -99,6 +99,7 @@
         <if test="startDate!=null">start_date=#{startDate},</if>
         <if test="endDate!=null">end_date=#{endDate},</if>
         <if test="money!=null">money=#{money},</if>
+        <if test="status!=null">status=#{status},</if>
         <if test="num!=null">num=#{num},</if>
         <if test="useDate!=null">use_date=#{useDate},</if>
         <if test="reduceMoney!=null">reduce_money=#{reduceMoney},</if>
@@ -124,4 +125,28 @@
             #{item}
         </foreach>
     </update>
+
+    <!--根据主键查询优惠券详情-->
+    <select id="findById" resultType="com.kunlun.entity.Ticket">
+        SELECT
+        id,
+        seller_id,
+        ticket_name,
+        content,
+        start_date,
+        end_date,
+        money,
+        num,
+        status,
+        create_date,
+        ticket_no,
+        type,
+        update_date,
+        num_limit,
+        use_range,
+        use_date,
+        reduce_money
+        FROM t_ticket
+        WHERE id=#{id}
+    </select>
 </mapper>
