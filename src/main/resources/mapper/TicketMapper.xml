@@ -105,4 +105,12 @@
         update_date=NOW()
         WHERE id=#{id}
     </update>
+
+    <!--根据主键id删除优惠券-->
+    <update id="deleteById" parameterType="com.kunlun.entity.Ticket">
+        UPDATE t_ticket SET
+        status='UN_NORMAL',
+        update_date=NOW()
+        WHERE id=#{id}
+    </update>
 </mapper>

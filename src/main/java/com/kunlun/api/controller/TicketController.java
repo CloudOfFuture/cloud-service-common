@@ -4,6 +4,7 @@ import com.kunlun.api.service.TicketService;
 import com.kunlun.entity.Ticket;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
+import com.mysql.fabric.xmlrpc.base.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
@@ -85,6 +86,17 @@ public class TicketController {
     @PostMapping(value = "/modifyByTicket")
     public DataRet modifyByTicket(@RequestBody Ticket ticket) {
         return ticketService.modifyByTicket(ticket);
+    }
+
+    /**
+     * 根据主键id删除优惠券
+     *
+     * @param id 主键
+     * @return
+     */
+    @GetMapping(value = "deleteById")
+    public DataRet deleteById(@RequestParam(value = "id") Long id) {
+        return ticketService.deleteById(id);
     }
 
 }

@@ -78,4 +78,12 @@ public interface TicketMapper {
      * @return
      */
     Integer modifyByTicket(Ticket ticket);
+
+    /**
+     * 根据主键id删除优惠券
+     *
+     * @param id
+     * @return
+     */
+    Integer deleteById(@Param("id") Long id);
 }

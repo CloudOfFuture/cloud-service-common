@@ -158,4 +158,22 @@ public class TicketServiceImpl implements TicketService {
 //        }
         return new DataRet("修改优惠券成功");
     }
+
+    /**
+     * 根据主键id删除优惠券
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public DataRet deleteById(Long id) {
+        if (id == null) {
+            return new DataRet("ERROR", "参数错误，id不存在");
+        }
+        Integer result = ticketMapper.deleteById(id);
+        if (result > 0) {
+            return new DataRet("删除优惠券成功");
+        }
+        return new DataRet("ERROR", "删除优惠券失败");
+    }
 }

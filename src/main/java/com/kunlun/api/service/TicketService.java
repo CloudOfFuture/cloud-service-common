@@ -53,4 +53,12 @@ public interface TicketService {
      * @return
      */
     DataRet modifyByTicket(Ticket ticket);
+
+    /**
+     * 根据主键id删除优惠券
+     *
+     * @param id
+     * @return
+     */
+    DataRet deleteById(Long id);
 }
