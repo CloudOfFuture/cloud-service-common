@@ -6,6 +6,9 @@ import com.kunlun.entity.TicketSnapshot;
 import com.kunlun.entity.TicketUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 /**
  * @author by hws
@@ -86,4 +89,12 @@ public interface TicketMapper {
      * @return
      */
     Integer deleteById(@Param("id") Long id);
+
+    /**
+     * 根据主键id批量删除优惠券
+     *
+     * @param list
+     * @return
+     */
+    Integer batchDeleteById(@Param("list") List<Long> list);
 }

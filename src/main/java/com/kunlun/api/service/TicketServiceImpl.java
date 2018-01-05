@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -175,5 +176,23 @@ public class TicketServiceImpl implements TicketService {
             return new DataRet("删除优惠券成功");
         }
         return new DataRet("ERROR", "删除优惠券失败");
+    }
+
+    /**
+     * 根据主键id批量删除优惠券
+     *
+     * @param list
+     * @return
+     */
+    @Override
+    public DataRet batchDeleteById(List<Long> list) {
+        if (list == null || list.size() == 0) {
+            return new DataRet("ERROR", "参数错误，id不存在");
+        }
+        Integer result = ticketMapper.batchDeleteById(list);
+        if (result > 0) {
+            return new DataRet("批量删除优惠券成功");
+        }
+        return new DataRet("ERROR", "批量删除优惠失败");
     }
 }

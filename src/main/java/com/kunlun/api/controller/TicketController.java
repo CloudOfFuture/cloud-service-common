@@ -1,5 +1,7 @@
 package com.kunlun.api.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.kunlun.api.service.TicketService;
 import com.kunlun.entity.Ticket;
 import com.kunlun.result.DataRet;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author by hws
@@ -97,6 +100,18 @@ public class TicketController {
     @GetMapping(value = "deleteById")
     public DataRet deleteById(@RequestParam(value = "id") Long id) {
         return ticketService.deleteById(id);
+    }
+
+    /**
+     * 根据主键id批量删除优惠券
+     *
+     * @param jsonObject 数组对象
+     * @return
+     */
+    @PostMapping(value = "batchDeleteById")
+    public DataRet batchDeleteById(@RequestBody JSONObject jsonObject) {
+        List<Long> list = jsonObject.getJSONArray("list").toJavaList(Long.class);
+        return ticketService.batchDeleteById(list);
     }
 
 }

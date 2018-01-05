@@ -113,4 +113,15 @@
         update_date=NOW()
         WHERE id=#{id}
     </update>
+
+    <!--根据主键id批量删除优惠券-->
+    <update id="batchDeleteById" parameterType="com.kunlun.entity.Ticket">
+        UPDATE t_ticket SET
+        status='UN_NORMAL',
+        update_date=NOW()
+        WHERE id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>
