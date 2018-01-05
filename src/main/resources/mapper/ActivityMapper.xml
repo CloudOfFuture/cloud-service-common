@@ -207,4 +207,10 @@
         update_date
         FROM t_activity_good WHERE good_id=#{goodId}
     </select>
+
+
+    <!--活动(拼团)商品库存扣减-->
+    <update id="updateStock">
+        UPDATE t_activity_good SET stock=(stock-#{count}) WHERE id=#{id}
+    </update>
 </mapper>

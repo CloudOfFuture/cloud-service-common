@@ -324,7 +324,7 @@ public class ActivityServiceImpl implements ActivityService {
      * @return
      */
     @Override
-    public DataRet<String> checkActivityGood( Long goodId) {
+    public DataRet<String> checkActivityGood(Long goodId) {
         ActivityGood activityGood = activityMapper.findByActivityIdAndGoodId(goodId);
         if (activityGood.getStock() <= 0 || null == activityGood) {
             return new DataRet<>("ERROR", "库存不足");
@@ -333,8 +333,25 @@ public class ActivityServiceImpl implements ActivityService {
             return new DataRet<>("ERROR", "活动商品信息已过期,请重新下单");
         }
         if (CommonEnum.OFF_SALE.getCode().equals(activityGood.getOnSale())) {
-            return new DataRet<>("ERROR","活动商品下架,请重新下单");
+            return new DataRet<>("ERROR", "活动商品下架,请重新下单");
         }
         return new DataRet<>("商品信息合格");
+    }
+
+
+    /**
+     * 库存扣减
+     *
+     * @param id
+     * @param count
+     * @return
+     */
+    @Override
+    public DataRet<String> updateStock(Long id, int count) {
+        Integer result = activityMapper.updateStock(id, count);
+        if (result <= 0) {
+            return new DataRet<>("ERROR","库存扣减失败");
+        }
+        return new DataRet<>("库存扣减成功");
     }
 }

@@ -172,4 +172,18 @@ public class ActivityController {
     public DataRet<String>checkActivityGood(@RequestParam(value = "goodId") Long goodId){
         return activityService.checkActivityGood(goodId);
     }
+
+
+    /**
+     * 库存扣减
+     *
+     * @param id
+     * @param count
+     * @return
+     */
+    @PostMapping("/activity/updateStock")
+    public DataRet<String> updateStock(@RequestParam("id") Long id,
+                                @RequestParam("count") int count){
+        return activityService.updateStock(id,count);
+    }
 }

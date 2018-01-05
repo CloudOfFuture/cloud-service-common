@@ -112,4 +112,14 @@ public interface ActivityService {
      * @return
      */
     DataRet<String> checkActivityGood(Long goodId);
+
+
+    /**
+     * 库存扣减
+     *
+     * @param id
+     * @param count
+     * @return
+     */
+    DataRet<String> updateStock(Long id, int count);
 }

@@ -166,4 +166,14 @@ public interface ActivityMapper {
      * @return
      */
     ActivityGood findByActivityIdAndGoodId(@Param("goodId") Long goodId);
+
+
+    /**
+     * 库存扣减
+     *
+     * @param id
+     * @param count
+     * @return
+     */
+    Integer updateStock(@Param("id") Long id, @Param("count") int count);
 }
