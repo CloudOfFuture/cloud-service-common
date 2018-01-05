@@ -61,4 +61,21 @@ public interface TicketMapper {
      * @return
      */
     Page<Ticket> findByCondition(@Param("searchKey") String searchKey);
+
+    /**
+     * 校验优惠券名字
+     *
+     * @param id
+     * @param ticketName
+     * @return
+     */
+    Integer validTicketByNameAndId(@Param("id") Long id, @Param("ticketName") String ticketName);
+
+    /**
+     * 修改优惠券
+     *
+     * @param ticket
+     * @return
+     */
+    Integer modifyByTicket(Ticket ticket);
 }

@@ -76,4 +76,15 @@ public class TicketController {
         return ticketService.findByCondition(pageNo, pageSize, searchKey);
     }
 
+    /**
+     * 修改优惠券
+     *
+     * @param ticket 优惠券
+     * @return
+     */
+    @PostMapping(value = "/modifyByTicket")
+    public DataRet modifyByTicket(@RequestBody Ticket ticket) {
+        return ticketService.modifyByTicket(ticket);
+    }
+
 }
