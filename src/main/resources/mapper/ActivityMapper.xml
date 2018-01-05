@@ -205,7 +205,7 @@
         create_date,
         stock,
         update_date
-        FROM t_activity_good WHERE good_id=#{goodId}
+        FROM t_activity_good WHERE good_id=#{goodId} AND  status='NORMAL'
     </select>
 
 

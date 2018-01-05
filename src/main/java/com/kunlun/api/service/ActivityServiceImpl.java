@@ -326,7 +326,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public DataRet<String> checkActivityGood(Long goodId) {
         ActivityGood activityGood = activityMapper.findByActivityIdAndGoodId(goodId);
-        if (activityGood.getStock() <= 0 || null == activityGood) {
+        if (null == activityGood || activityGood.getStock() <= 0) {
             return new DataRet<>("ERROR", "库存不足");
         }
         if (CommonEnum.UN_NORMAL.getCode().equals(activityGood.getStatus())) {
@@ -350,7 +350,7 @@ public class ActivityServiceImpl implements ActivityService {
     public DataRet<String> updateStock(Long id, int count) {
         Integer result = activityMapper.updateStock(id, count);
         if (result <= 0) {
-            return new DataRet<>("ERROR","库存扣减失败");
+            return new DataRet<>("ERROR", "库存扣减失败");
         }
         return new DataRet<>("库存扣减成功");
     }
