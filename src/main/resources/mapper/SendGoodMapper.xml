@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunlun.api.mapper.SendGoodMapper">
+    <!--新增发货信息-->
+    <insert id="add" parameterType="com.kunlun.entity.SendGood">
+        INSERT INTO t_send_good(
+        order_id,
+        express_name,
+        express_no,
+        delivery_no,
+        sender_id,
+        create_date,
+        update_date
+        ) VALUES (
+        #{orderId},
+        #{expressName},
+        #{expressNo},
+        #{deliveryNo},
+        #{senderId},
+        NOW(),
+        NOW()
+        )
+    </insert>
+
+    <!--根据id查详情-->
+    <select id="findById" resultType="com.kunlun.entity.SendGood">
+        SELECT id,
+        order_id,
+        express_name,
+        express_no,
+        delivery_no,
+        sender_id,
+        create_date,
+        update_date
+        FROM t_send_good WHERE id=#{id}
+    </select>
+</mapper>
