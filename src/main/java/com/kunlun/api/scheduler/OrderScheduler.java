@@ -38,7 +38,7 @@ public class OrderScheduler {
      * 12小时执行一次 查询申请退款时间大于两天（48小时） 的订单
      * 12 * 60 * 60 * 1000
      */
-    @Scheduled(fixedRate = 2 * 60 * 1000)
+    @Scheduled(fixedRate = 12 * 60 * 60 * 1000)
     public void refundingOrder() {
         DataRet<List<Order>> dataRet = orderClient.findRefundingOrder();
         if (!dataRet.isSuccess() || dataRet.getBody() == null || dataRet.getBody().size() == 0) {
@@ -89,7 +89,7 @@ public class OrderScheduler {
      * 查询未付款订单，校验微信支付结果
      */
 //    @Scheduled(fixedRate = 4 * 60 * 60 * 1000)
-    @Scheduled(fixedRate = 1 * 60 * 1000)
+    @Scheduled(fixedRate = 4 * 60 * 60 * 1000)
     public void findUnPayOrder() {
         DataRet<List<Order>> dataRet = orderClient.findUnPayOrder();
         if (!dataRet.isSuccess() || dataRet.getBody() == null || dataRet.getBody().size() == 0) {

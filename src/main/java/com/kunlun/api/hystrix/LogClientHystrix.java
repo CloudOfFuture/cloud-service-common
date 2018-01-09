@@ -2,6 +2,7 @@ package com.kunlun.api.hystrix;
 
 import com.alibaba.fastjson.JSONArray;
 import com.kunlun.api.client.LogClient;
+import com.kunlun.entity.OrderLog;
 import com.kunlun.result.DataRet;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,11 @@ import org.springframework.stereotype.Component;
 public class LogClientHystrix implements LogClient {
     @Override
     public DataRet saveGoodLogs(JSONArray jsonArray) {
-        return new DataRet<>("新增失败");
+        return new DataRet<>("ERROR", "新增请求失败");
+    }
+
+    @Override
+    public DataRet<String> addOrderLog(OrderLog orderLog) {
+        return new DataRet<>("ERROR", "新增请求失败");
     }
 }
