@@ -3,6 +3,7 @@ package com.kunlun.api.client;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kunlun.api.hystrix.LogClientHystrix;
+import com.kunlun.entity.OrderLog;
 import com.kunlun.result.DataRet;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,4 +25,14 @@ public interface LogClient {
      */
     @PostMapping("/log/add/goodLogs")
     DataRet saveGoodLogs(@RequestBody JSONArray jsonArray);
+
+    /**
+     * 创建订单日志
+     *
+     * @param orderLog
+     * @return
+     */
+    @PostMapping("/log/add/orderLog")
+    DataRet<String> addOrderLog(@RequestBody OrderLog orderLog);
+
 }
