@@ -5,7 +5,6 @@ import com.kunlun.api.service.BrandService;
 import com.kunlun.entity.Brand;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
-import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.kunlun.constant.Constant;
