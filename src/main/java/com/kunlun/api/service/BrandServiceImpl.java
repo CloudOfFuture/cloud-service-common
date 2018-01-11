@@ -68,7 +68,7 @@ public class BrandServiceImpl implements BrandService {
         if (brand.getId() == null) {
             return new DataRet("ERROR", "未找到品牌");
         }
-        Integer result = brandMapper.validByName(brand.getBrandName());
+        Integer result = brandMapper.validByNameAndId(brand.getBrandName(),brand.getId());
         if (result > 0) {
             return new DataRet("ERROR", "品牌名字不能相同");
         }

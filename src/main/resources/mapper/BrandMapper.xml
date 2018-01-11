@@ -9,6 +9,11 @@
         SELECT COUNT(*) FROM  t_brand WHERE  brand_name=#{brandName} AND status='ENTER'
     </select>
 
+    <!--判断品牌是否存在-->
+    <select id="validByNameAndId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM  t_brand WHERE id!=#{id} AND brand_name=#{brandName} AND status='ENTER'
+    </select>
+
     <!--增加品牌-->
     <insert id="add" parameterType="com.kunlun.entity.Brand">
         INSERT INTO t_brand (

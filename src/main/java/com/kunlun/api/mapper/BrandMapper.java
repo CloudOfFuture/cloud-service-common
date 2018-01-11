@@ -64,4 +64,12 @@ public interface BrandMapper {
      */
     void batchModifyStatus(@Param("status") String status, @Param("idList") List<Long> idList);
 
+    /**
+     * 校验除id外的名称是否有重复的
+     *
+     * @param brandName
+     * @param id
+     * @return
+     */
+    Integer validByNameAndId(@Param("brandName") String brandName,@Param("id") Long id);
 }
