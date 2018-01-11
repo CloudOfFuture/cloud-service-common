@@ -18,7 +18,7 @@ import java.util.List;
 public interface TicketMapper {
 
     /**
-     * 根据 快照id查询优惠券详情
+     * 根据用户优惠券快照id查询优惠券详情
      *
      * @param ticketSnapShotId
      * @return
@@ -26,12 +26,12 @@ public interface TicketMapper {
     TicketSnapshot findTicketSnapShotInfo(@Param("ticketSnapShotId") Long ticketSnapShotId);
 
     /**
-     * 根据tickId查找用户优惠券详情信息
+     * 根据ticketId查找用户优惠券详情信息
      *
-     * @param tickId
+     * @param ticketId
      * @return
      */
-    TicketUser findTicketUserInfo(@Param("tickId") Long tickId);
+    TicketUser findTicketUserInfo(@Param("ticketId") Long ticketId);
 
     /**
      * 修改用户优惠券状态
@@ -39,7 +39,7 @@ public interface TicketMapper {
      * @param ticketId
      * @return
      */
-    int modifyUserTicketStatus(@Param("ticketId") Long ticketId, @Param("status") String status);
+    Integer modifyUserTicketStatus(@Param("ticketId") Long ticketId, @Param("status") String status);
 
     /**
      * 判断优惠券名称是否存在
