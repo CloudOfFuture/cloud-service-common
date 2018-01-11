@@ -5,12 +5,36 @@
 <mapper namespace="com.kunlun.api.mapper.TicketMapper">
     <!--查询优惠券快照信息-->
     <select id="findTicketSnapShotInfo" resultType="com.kunlun.entity.TicketSnapshot">
-        SELECT * from t_ticket_snapshot WHERE id=#{ticketSnapShotId}
+        SELECT id,
+        ticket_name,
+        content,
+        start_date,
+        end_date,
+        money,
+        num,
+        create_date,
+        ticket_no,
+        type,
+        update_date,
+        num_limit,
+        use_range,
+        ticket_id,
+        status,
+        reduce_money,
+        use_date
+        from t_ticket_snapshot WHERE id=#{ticketSnapShotId}
     </select>
 
     <!--查询用户优惠券信息-->
     <select id="findTicketUserInfo" resultType="com.kunlun.entity.TicketUser">
-        SELECT * from t_ticket_user WHERE id = #{tickId}
+        SELECT id,
+        snapshot_id,
+        user_id,
+        num,
+        create_date,
+        update_date,
+        status
+        from t_ticket_user WHERE id=#{ticketId}
     </select>
 
     <!--更改用户优惠券状态-->

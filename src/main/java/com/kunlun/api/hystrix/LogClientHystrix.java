@@ -22,4 +22,5 @@ public class LogClientHystrix implements LogClient {
     public DataRet<String> addOrderLog(OrderLog orderLog) {
         return new DataRet<>("ERROR", "新增请求失败");
     }
+
 }

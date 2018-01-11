@@ -49,6 +49,9 @@ public class TicketServiceImpl implements TicketService {
         }
         //根据用户优惠券详情中的快照ID,查找优惠券详情
         TicketSnapshot ticketSnapshot = ticketMapper.findTicketSnapShotInfo(ticketUser.getSnapshotId());
+        if (ticketSnapshot == null) {
+            return new DataRet<>("ERROR", "用户优惠券详情不存在");
+        }
         Logger logger = Logger.getLogger(ticketUser.getStatus());
         logger.info(ticketUser.getStatus());
         if ("ALREADY_USED".equals(ticketUser.getStatus())) {

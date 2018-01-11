@@ -29,7 +29,7 @@ public class TicketController {
      * @param ticketId
      * @return
      */
-    @GetMapping("checkTicket")
+    @GetMapping(value = "/checkTicket")
     public DataRet<String> checkTicket(@RequestParam(value = "useTicket") String useTicket,
                                        @RequestParam(value = "ticketId") Long ticketId) {
         return ticketService.checkTicket(useTicket, ticketId);
@@ -42,7 +42,7 @@ public class TicketController {
      * @param status
      * @return
      */
-    @PostMapping("modifyStatus")
+    @GetMapping(value = "/modifyStatus")
     public DataRet<String> modifyStatus(@RequestParam(value = "ticketId") Long ticketId,
                                         @RequestParam(value = "status") String status) {
         return ticketService.modifyUserTicketStatus(ticketId, status);
