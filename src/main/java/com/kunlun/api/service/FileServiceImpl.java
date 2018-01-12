@@ -2,11 +2,11 @@ package com.kunlun.api.service;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.kunlun.api.mapper.FileMapper;
 import com.kunlun.constant.Constant;
+import com.kunlun.entity.ImageRequestParam;
 import com.kunlun.entity.MallImageSize;
 import com.kunlun.entity.MallImg;
 import com.kunlun.enums.CommonEnum;
@@ -14,8 +14,6 @@ import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,18 +44,13 @@ public class FileServiceImpl implements FileService {
         if (StringUtils.isEmpty(jsonContent)) {
             return new DataRet("param_error", "参数有误");
         }
-        jsonContent = jsonContent.replace("\r\n", "");
-        JSONObject jsonObject = JSON.parseObject(jsonContent);
-        String imageType = jsonObject.getString("imageType");
-        String cut = jsonObject.getString("cut");
-        String watermark = jsonObject.getString("watermark");
-        List<MallImageSize> cutSizeList;
-        if (jsonObject.containsKey("cutSizeList")) {
-            cutSizeList = jsonObject.getJSONArray("cutSizeList").toJavaList(MallImageSize.class);
-        } else {
+        jsonContent = jsonContent.replace("\\", "");
+        ImageRequestParam requestParam = JSON.parseObject(jsonContent, ImageRequestParam.class);
+        List<MallImageSize> cutSizeList = requestParam.getCutSize();
+        if (cutSizeList == null) {
             cutSizeList = new ArrayList<>();
         }
-        String path = parseFilePathByType(imageType);
+        String path = parseFilePathByType(requestParam.getImageType());
         existDir(path);
         Calendar calendar = Calendar.getInstance();
         String fileName = String.valueOf(calendar.getTime().getTime());
@@ -74,9 +67,9 @@ public class FileServiceImpl implements FileService {
             fileMapper.add(new MallImg(imageUrl, CommonEnum.TYPE_IMG_RICH_CONTENT.getCode()));
         }
         //裁剪
-        if (CommonEnum.CUT.getCode().equals(cut)) {
-            cutImage(watermark, cutSizeList, path, fileName, endName, image, urlList);
-        } else if (CommonEnum.WATER_REMARK.getCode().equals(watermark)) {
+        if (CommonEnum.CUT.getCode().equals(requestParam.getCut())) {
+            cutImage(requestParam.getWatermark(), cutSizeList, path, fileName, endName, image, urlList);
+        } else if (CommonEnum.WATER_REMARK.getCode().equals(requestParam.getWatermark())) {
             //加水印
             String absolutePath = getAbsolutePath(path, fileName, endName, null);
             waterRemark(null, absolutePath);

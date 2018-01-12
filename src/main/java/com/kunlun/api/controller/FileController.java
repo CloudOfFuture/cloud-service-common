@@ -110,7 +110,7 @@ public class FileController {
 
 
     /**
-     *获取图片列表
+     * 获取图片列表
      *
      * @param type
      * @param targetId
@@ -118,8 +118,8 @@ public class FileController {
      */
     @GetMapping("/findList")
     public DataRet list(@RequestParam(value = "type") String type,
-                           @RequestParam(value = "targetId") Long targetId){
-        return fileService.list(targetId,type);
+                        @RequestParam(value = "targetId") Long targetId) {
+        return fileService.list(targetId, type);
     }
 
 
