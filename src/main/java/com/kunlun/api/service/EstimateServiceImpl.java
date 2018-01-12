@@ -31,6 +31,7 @@ public class EstimateServiceImpl implements EstimateService {
         if (StringUtils.isNullOrEmpty(userId)) {
             return new DataRet("ERROR", "参数错误");
         }
+        estimate.setUserId(userId);
         Long goodId = estimate.getGoodId();
         if (goodId == null) {
             return new DataRet("ERROR", "参数错误");
