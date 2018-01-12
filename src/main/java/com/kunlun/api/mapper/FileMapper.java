@@ -40,6 +40,13 @@ public interface FileMapper {
     void deleteByUrl(@Param("url") String url);
 
     /**
+     * 删除主图子图
+     *
+     * @param url 图片链接
+     */
+    void deleteAllByUrl(@Param("url") String url);
+
+    /**
      * 图片对应的商品ID
      *
      * @param mallImg MallImg
@@ -51,8 +58,9 @@ public interface FileMapper {
      * 增加图片
      *
      * @param mallImg MallImg
+     * @return int
      */
-    void add(MallImg mallImg);
+    int add(MallImg mallImg);
 
     /**
      * 根据商品ID查找图片列表
@@ -88,5 +96,5 @@ public interface FileMapper {
      * @param type
      * @return
      */
-    List<MallImg> list(@Param("targetId") Long targetId,@Param("type") String type);
+    List<MallImg> list(@Param("targetId") Long targetId, @Param("type") String type);
 }

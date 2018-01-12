@@ -40,10 +40,7 @@ public class FileServiceImpl implements FileService {
     @Autowired
     FileMapper fileMapper;
 
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(FileServiceImpl.class);
-
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public DataRet uploadImage(MultipartFile file, String jsonContent) throws IOException {
         if (StringUtils.isEmpty(jsonContent)) {
@@ -169,28 +166,33 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public DataRet add(MallImg mallImg) {
+        int result;
         if (CommonEnum.TYPE_IMG_ID_PHOTO.getCode().equals(mallImg.getType())) {
             //证件照，
             List<MallImg> imgList = fileMapper.findIdPhotoByUserId(mallImg.getTargetId());
             if (imgList.size() == 0) {
                 //不存在证件照直接添加
-                fileMapper.add(mallImg);
+                result = fileMapper.add(mallImg);
             } else {
                 imgList.forEach(item -> fileMapper.deleteByUrl(item.getUrl()));
-                fileMapper.add(mallImg);
+                result = fileMapper.add(mallImg);
             }
+        } else {
+            result = fileMapper.add(mallImg);
         }
-        fileMapper.add(mallImg);
-        return new DataRet<>("添加成功");
+        if (result > 0) {
+            return new DataRet<>("添加成功");
+        }
+        return new DataRet("ERROR", "新增失败");
     }
 
 
     /**
      * 获取图片列表
      *
-     * @param targetId
-     * @param type
-     * @return
+     * @param targetId targetId
+     * @param type     type
+     * @return DataRet
      */
     @Override
     public DataRet list(Long targetId, String type) {
@@ -283,7 +285,6 @@ public class FileServiceImpl implements FileService {
         File file = new File(filePath);
         if (file.isFile() && file.exists()) {
             boolean delResult = file.getAbsoluteFile().delete();
-            LOGGER.debug("删除文件: " + delResult);
         }
     }
 
@@ -421,9 +422,8 @@ public class FileServiceImpl implements FileService {
     private static void existDir(String path) {
         File file = new File(path);
         if (!file.exists()) {
-            if (!file.mkdirs()) {
-                LOGGER.error("创建文件夹出错--------------");
-            }
+            file.mkdirs();
         }
+
     }
 }
