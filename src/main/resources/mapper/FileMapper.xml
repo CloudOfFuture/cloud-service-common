@@ -20,6 +20,11 @@
         DELETE FROM  t_mall_img WHERE url = #{url}
     </delete>
 
+    <!--删除主图子图-->
+    <delete id="deleteAllByUrl">
+        DELETE FROM  t_mall_img WHERE url LIKE #{url}
+    </delete>
+
     <!--根据id删除图片-->
     <delete id="deleteById">
         DELETE FROM t_mall_img WHERE id=#{id}
@@ -42,8 +47,14 @@
         NOW())
     </insert>
 
-    <!--根据type查找图片 商品图片0,品牌图片1,文章图片2,商品评价图片3,广告图片4,
-    活动图片5,富文本图片路径 6 ,证件照图片路径  7-->
+    <!--根据type查找图片 类型 商品图片 TYPE_IMG_GOOD,
+                        品牌图片 TYPE_IMG_BRAND,
+                        文章图片 TYPE_IMG_ARTICLE,
+                        商品评价图片 TYPE_IMG_ESTIMATE,
+                        广告图片 TYPE_IMG_BANNER,
+                        活动图片 TYPE_IMG_ACTIVITY,
+                        富文本图片路径 TYPE_IMG_RICH_CONTENT ,
+                        证件照图片路径  TYPE_IMG_ID_PHOTO-->
     <select id="findByCondition" resultType="com.kunlun.entity.MallImg">
         SELECT id,
         target_id,
