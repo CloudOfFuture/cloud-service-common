@@ -4,6 +4,8 @@ import com.kunlun.api.service.FileService;
 import com.kunlun.entity.MallImg;
 import com.kunlun.result.DataRet;
 import com.kunlun.result.PageResult;
+import com.kunlun.utils.EncryptUtil;
+import feign.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,10 +35,9 @@ public class FileController {
      */
     @PostMapping(value = "/uploadImage")
     public DataRet uploadImage(@RequestParam(value = "file") MultipartFile file,
-                               @RequestParam(value = "jsonContent") String jsonContent) throws IOException {
+                               @RequestParam(value = "jsonContent") String jsonContent) throws Exception {
         return fileService.uploadImage(file, jsonContent);
     }
-
     /**
      * 添加图片
      *
